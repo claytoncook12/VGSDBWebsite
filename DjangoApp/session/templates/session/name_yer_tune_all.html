@@ -1,0 +1,30 @@
+{% extends 'session/base.html' %}
+{% load static %}
+
+{% block content %}
+    <h1>#NameYerTune Tunes</h1>
+
+    <table id="myTable" class="table table-bordered" style="text-align: center;">
+        <tr class="header d-flex">
+          <th class='col-4'>Name</th>
+          <th class='col-4'>Type</th>
+          <th class='col-4'>Session</th>
+        </tr>
+    {% for name_yer_tune in name_yer_tunes_all %}
+        <tr class='d-flex' style="">
+            <td class='col-4'>
+                <a href="{% url 'tune_detail' name_yer_tune.tune.tune_id %}">
+                    {{ name_yer_tune.tune.name1|title }}
+                </a>
+            </td>
+            <td class='col-4'>
+                {{ name_yer_tune.tune.tune_type.tune_type_char|title }}
+            </td>
+            <td class='col-4'>
+                {{ name_yer_tune.session.date }}
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+
+{% endblock %}

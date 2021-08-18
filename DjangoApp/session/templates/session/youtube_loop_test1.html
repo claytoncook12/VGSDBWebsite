@@ -1,0 +1,77 @@
+{% extends 'session/base.html' %}
+
+{% block content %}
+<h1>Test1<br>Looping of Video</h1>
+<br>
+<p>
+    From: <a href="http://jsbin.com/ropixuyona/1/edit?html,js,output" target="_blank">
+    http://jsbin.com/ropixuyona/1/edit?html,js,output</a>
+</p>
+
+<!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+<div class="embed-responsive embed-responsive-16by9">
+    <div class="embed-responsive-item" id="player"></div>
+</div>
+
+<!-- CSC Insert Buttons -->
+<button onclick="startSpecificTime()">Set 1</button>
+<button onclick="playHalf()">Half Speed</button>
+<div class="slidecontainer">
+    <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+</div>
+
+<script>
+    // 2. This code loads the IFrame Player API code asynchronously.
+    var tag = document.createElement('script');
+
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+</script>
+
+<script>
+    // 3. This function creates an <iframe> (and YouTube player)
+    //    after the API code downloads.
+    var player;
+    function onYouTubeIframeAPIReady() {
+    player = new YT.Player(
+        'player',
+        {
+        videoId: '7r4wQ7Li3l8',
+        playerVars: {'controls': 1},
+        events: {
+            'onReady': onPlayerReady,
+        }
+        }
+    );
+    }
+    
+    function onPlayerReady(event) {
+        player.seekTo(0);
+    }
+
+    function restartVideoSection() {
+        player.seekTo(section.start);
+    }
+
+    function pauseVideoRestart(event) {
+        player.pauseVideo();
+        player.seekTo(section.start);
+    }
+
+    function playVideo(event) {
+        player.playVideo()
+    }
+
+    function playHalf(event) {
+        player.setPlaybackRate(0.5); // Set to Half Speed
+    }
+
+    function startSpecificTime(event){
+        player.seekTo(265);
+        player.playVideo();
+    }
+
+</script>
+
+{% endblock %}

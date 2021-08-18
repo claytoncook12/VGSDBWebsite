@@ -1,0 +1,25 @@
+{% extends 'session/base.html' %}
+
+{% block content %}
+    <h1>Previous Youtube Sessions</h1>
+    
+    <table id="myTable" class="table table-bordered" style="text-align: center;">
+        <tr class="header d-flex">
+          <th class='col-4'>Date</th>
+          <th class='col-8'>Name</th>
+        </tr>
+        {% for session in sessions %}
+        <tr class='d-flex' style="">
+            <td class='col-4'>
+                {{ session.date }}
+            </td>
+            <td class='col-8'>
+                <a href="{% url 'session_detail' session.date.year session.date.month session.date.day %}">
+                    {{ session.name|title }}
+                </a>
+            </td>
+        </tr>
+
+        {% endfor %}
+    </table>
+{% endblock %}

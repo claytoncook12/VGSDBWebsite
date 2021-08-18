@@ -1,0 +1,20 @@
+# syntax=docker/dockerfile:1
+FROM python:3
+
+# set environment variables
+ENV PYTHONUNBUFFERED=1
+
+# create directories
+WORKDIR /code
+COPY requirements.txt /code/
+
+# Install requirements
+RUN pip install -r requirements.txt
+
+# copy project
+COPY . /code/
+
+# create migrations and update database
+# need to create .sh file to run commands
+# run python manage.py migrate --noinput
+# run python manage.py collectstatic --noinput

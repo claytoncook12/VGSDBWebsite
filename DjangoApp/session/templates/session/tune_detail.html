@@ -1,0 +1,85 @@
+{% extends 'session/base.html' %}
+
+{% block content %}
+
+<h1>
+    {{ tune_id_detail.name1|title }}
+    {% if tune_id_detail.name2 %}
+        <br> aka. {{ tune_id_detail.name2|title }}
+    {% endif %}
+    {% if tune_id_detail.name3 %}
+        , {{ tune_id_detail.name3|title }},
+    {% endif %}
+    {% if tune_id_detail.name3 %}
+        {{ tune_id_detail.name3|title }}
+    {% endif %} 
+</h1>
+
+<h3>
+    Tune Type: {{ tune_id_detail.tune_type.tune_type_char|title }}<br>
+</h3>
+<br>
+
+<h5>
+    Notes: {{ tune_id_detail.tune_info }}<br>
+</h5>
+
+{% if name_yer_tune_detail %}
+    <h3>#NameYerTune Teaching Video</h3>
+    <div class="embed-responsive embed-responsive-16by9">
+        <iframe class="embed-responsive-item" src="{{ name_yer_tune_detail.youtube_teaching_url }}" allowfullscreen></iframe>
+    </div>
+    <a href="{% url 'session_detail' name_yer_tune_detail.session.date.year  name_yer_tune_detail.session.date.month  name_yer_tune_detail.session.date.day %}">
+        #NameYerTune First Session 
+    </a>
+    <br>
+    <br>
+{% endif %}
+
+{% if tune_of_the_month_detail %}
+    <h3>Tune of The Month Teaching Video</h3>
+    <div class="embed-responsive embed-responsive-16by9">
+        <iframe class="embed-responsive-item" src="{{ tune_of_the_month_detail.youtube_teaching_url }}" allowfullscreen></iframe>
+    </div>
+    <br>
+    <br>
+{% endif %}
+
+<h3 style="text-align: left;">
+    Virtual Guided Session
+    Time(s) Played: {{ played_tune_all_count }}
+</h3>
+{% if played_tune_all %}
+    <table id="myTable" class="table table-bordered" style="text-align: center;">
+        <tr class="header d-flex">
+        <th class='col-3'>Session Date</th>
+        <th class='col-3'>Key Played</th>
+        <th class='col-3'>Set #</th>
+        <th class='col-3'># In Set</th>
+        </tr>
+        {% for played_tune in played_tune_all %}
+        <tr class='d-flex' style="">
+            <td class='col-3'>
+                <a href="{% url 'session_detail' played_tune.played_tune_group.session.date.year played_tune.played_tune_group.session.date.month played_tune.played_tune_group.session.date.day %}">
+                    {{ played_tune.played_tune_group.session.date }}
+                </a>
+            </td>
+            <td class='col-3'>
+                {{ played_tune.key|title }}
+            </td>
+            <td class='col-3'>
+                {{ played_tune.played_tune_group.session_order_num }}
+            </td>
+            <td class='col-3'>
+                {{ played_tune.group_order_num }}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>Never Played at Heaton Virtual Guided Session</p>
+{% endif %}
+
+
+
+{% endblock %}

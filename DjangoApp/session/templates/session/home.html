@@ -1,0 +1,35 @@
+{% extends 'session/base.html' %}
+{% load static %}
+
+{% block content %}
+    <img class="img-fluid" src="{% static 'session/_main_heaton_fans_image.png' %}" style="padding: 5px;">
+    <br>
+    <br>
+
+    <p style="text-align: center;">
+        The goal of this site is to organize the many tunes that have been played on
+        Shannon and Matt Heatons <a href="https://www.youtube.com/playlist?list=PLNBgNicF6tU0jlitHYcB03R9bE7MkGBl0">
+        Virtual Guided Sessions</a>. Hopefully this site is able to make it easier 
+        for people to navigate the great tunes
+        that they have lead.
+    </p>
+
+    <h3>
+        Look Through the Collection:<br><br>
+        <a href="{% url 'full_yt_session_list' %}">
+            {{ sessions_count }} Online Sessions<br><br>
+        </a>
+        <a href="{% url 'nameyertune_all' %}">
+            {{ name_yer_tunes_count }} #NameYerTunes<br><br>
+        <a>
+        <a href="{% url 'tunes_all' %}">
+            {{ tunes_count }} Total Tunes<br><br>
+        </a>
+
+    </h3>
+
+    <br>
+    <h3>Go Straight to Shannons Youtube Page
+        <br><a href="https://www.youtube.com/channel/UC2jJahEPFofYItznRtMNCaQ" target="_"><i class="fab fa-youtube fa-2x"></i></a>
+    </h3>
+{% endblock %}

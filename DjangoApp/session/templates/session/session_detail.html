@@ -1,0 +1,89 @@
+{% extends 'session/base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Custom CSS -->
+<link rel="stylesheet" href="{% static 'session/css/session_detail.css' %}">
+
+<h1>{{ session_id_detail.name|title }}</h1>
+<div class="embed-responsive embed-responsive-16by9">
+    <div class="embed-responsive-item" id="player"></div>
+</div>
+
+    <script>
+      // 2. This code loads the IFrame Player API code asynchronously.
+      var tag = document.createElement('script');
+
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      // 3. This function creates an <iframe> (and YouTube player)
+      //    after the API code downloads.
+      var player;
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+          videoId: '{{ videoId }}',
+          events: {
+            'onReady': onPlayerReady,
+            'onError': onPlayerError,
+          }
+        });
+      }
+
+      // 4. The API will call this function when the video player is ready.
+      function onPlayerReady(event) {
+        //event.target.seekTo(0);
+      }
+
+      function onPlayerError(event){
+        console.log("Error Logged:",event);
+      }
+
+      function startSpecificTime(stime){
+        player.seekTo(stime);
+        player.playVideo();
+      }
+    </script>
+
+<!-- HTML for Set Buttons -->
+<div class='text-center'><b>Go to:</b></div>
+<div class="btn-block flex-wrap text-center" role="group" aria-label="Basic example">
+    {% for group in tune_groups_buttons %}
+    <button type="button"  id="set{{ group.session_order_num }}"
+    onclick="startSpecificTime({{group.start_time.seconds}})" 
+    class="btn btn-outline-dark btn-lg">
+        Set {{ group.session_order_num }}<br>
+    </button>
+    {% endfor %}
+</div>
+
+<br>
+<h3>Tunes Played</h3>
+{% for group in tune_groups %}
+    <h5>
+        Set {{ group.group.session_order_num }}{% if  group.group.offertory %} (Offertory) {% endif %}:
+    </h5> 
+    <p>
+        &emsp;({{ group.group.start_time }} to {{ group.group.end_time }})
+    </p>
+    <ol>
+    {% for tune in group.played_tunes %}
+        <li>
+            <a href="{% url 'tune_detail' tune.tune.pk %}">
+                {{ tune.tune.name1|title }} 
+                {% if tune.tune.name2 %}
+                aka. {{ tune.tune.name2|title }}
+                {% endif %}
+                ({{ tune.key|title }}) ({{ tune.tune.tune_type.tune_type_char|title }})
+            </a>
+            {% if  tune.add_info != '' or tune.tune.tune_info != '' %}
+            Notes: {{ tune.add_info }}, {{ tune.tune.tune_info }}
+            {% endif %}
+        </li>
+    {% endfor %}
+    </ol>
+{% endfor %}
+</div>
+
+{% endblock %}

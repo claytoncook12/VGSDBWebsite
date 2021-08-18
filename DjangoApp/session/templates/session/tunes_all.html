@@ -1,0 +1,56 @@
+{% extends 'session/base.html' %}
+{% load static %}
+
+{% block content %}
+<script src="{% static 'session/js/search.js' %}"></script>
+
+    <h1><u>Played Tunes</u></h1>
+    <br>
+
+    <form>
+        <h3 style="text-align: left">Search Tunes</h3>
+        <div class="form-group row" style="padding: 15px">
+          <input type="text" class="form-control col-4 col-sm-5" id="tuneName" onkeyup="searchTuneType()" placeholder="Tune">
+          <input type="text" class="form-control col-4 col-sm-3" id="typeName" onkeyup="searchTuneType()" placeholder="Type">
+          <input type="text" class="form-control col-2 col-sm-2" id="keyName" onkeyup="searchTuneType()" placeholder="Key">
+        </div>
+    </form>
+
+    <table id="myTable" class="table table-bordered" style="text-align: center;">
+        <tr class="header d-flex">
+          <th class='col-4 col-sm-5'>Name</th>
+          <th class='col-4 col-sm-3'>Type</th>
+          <th class='col-2 col-sm-2'>Key(s)</th>
+          <th class='col-2 col-sm-2'>Times Played</th>
+        </tr>
+        {% for tune in played_tunes %}
+        <tr class='d-flex' style="">
+            <td class='col-4 col-sm-5'>
+                <a href="{% url 'tune_detail' tune.tune__tune_id %}">
+                {{ tune.tune__name1|title }}
+                {% if tune.tune__name2 %}
+                    <br> aka. {{ tune.tune__name2|title }}
+                {% endif %}
+                {% if tune.tune__name3 %}
+                    , {{ tune.tune__name3|title }},
+                {% endif %}
+                {% if tune.tune__name3 %}
+                    {{ tune.tune__name3|title }}
+                {% endif %} 
+                </a>
+            </td>
+            <td class='col-4 col-sm-3'>
+                {{ tune.tune__tune_type__tune_type_char }}
+            </td>
+            <td class='col-2 col-sm-2'>
+                {% for key in tune.keys %}
+                    {{ key }}{% if not forloop.last %},{% endif %}
+                {% endfor %}
+            </td>
+            <td class='col-2 col-sm-2'>
+               {{ tune.tune__tune_id__count }}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
