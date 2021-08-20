@@ -16,15 +16,3 @@ Now the database files are created can run all containers.
 ```
 docker compose -f docker-compose.dev.yml up -d
 ```
-
-## Commands to Create and Load Django Fixtures
-
-To export data in Session app data
-```
-python manage.py dumpdata session > 2021-08-18sessionapp.json
-```
-
-To export import Session app data
-```
-python manage.py loaddata 2021-08-18sessionapp.json
-```
