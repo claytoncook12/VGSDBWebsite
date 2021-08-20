@@ -14,7 +14,7 @@ RUN pip install -r requirements.txt
 # copy project
 COPY . /code/
 
-# create migrations and update database
-# need to create .sh file to run commands
-# run python manage.py migrate --noinput
-# run python manage.py collectstatic --noinput
+# These line for /entrypoint.sh
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+entrypoint "/entrypoint.sh"
