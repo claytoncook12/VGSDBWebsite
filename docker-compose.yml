@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "6543:5432"
+  web:
+    build: 
+      context: ./DjangoApp
+      dockerfile: Dockerfile
+    command: /bin/sh -c "entrypoint.sh"
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./DjangoApp/.env
+    depends_on:
+      - db
