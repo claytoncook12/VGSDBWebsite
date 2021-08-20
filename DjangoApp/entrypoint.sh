@@ -1,3 +1,5 @@
+#!/bin/sh
+
 # Make Migrations to Database
 python manage.py migrate --noinput
 

@@ -18,3 +18,10 @@ COPY . /code/
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 entrypoint "/entrypoint.sh"
+
+# Expose Port 
+EXPOSE  8000
+
+# Entrypoint
+CMD         []
+ENTRYPOINT  ["/entrypoint.sh"]
