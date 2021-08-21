@@ -12,6 +12,7 @@ venv.bak/
 *.pot
 *.pyc
 __pycache__
+DjangoApp/static
 
 # PostgreSQL #
 DjangoApp/data
