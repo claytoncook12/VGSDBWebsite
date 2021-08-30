@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import tune, session, played_tune_group
 from .models import played_tune, name_yer_tune, tune_of_the_month
+from .models import key, tune_type
 
 
 class played_tune_group_inline(admin.TabularInline):
@@ -40,5 +41,13 @@ class name_yer_tune_admin(admin.ModelAdmin):
     pass
 
 @admin.register(tune_of_the_month)
-class tune_of_the_month(admin.ModelAdmin):
+class tune_of_the_month_admin(admin.ModelAdmin):
     ordering = ('-published_date',)
+
+@admin.register(key)
+class key_admin(admin.ModelAdmin):
+    ordering = ('key_type_char',)
+
+@admin.register(tune_type)
+class tune_type_admin(admin.ModelAdmin):
+    ordering = ('tune_type_char',)
