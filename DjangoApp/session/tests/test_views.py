@@ -8,7 +8,7 @@ from django.urls import reverse
 @pytest.mark.django_db
 class TestHomeView:
     def test_shows_home(self):
-        """The session view should show the session title."""
+        """The Home View shoudl retrun status code 200"""
         
         client = Client()
         response = client.get(reverse('home'))
