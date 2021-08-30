@@ -3,3 +3,5 @@ psycopg2-binary>=2.8
 python-decouple
 whitenoise
 gunicorn
+factory_boy
+pytest-django
