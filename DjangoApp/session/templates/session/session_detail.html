@@ -78,7 +78,7 @@
                 ({{ tune.key|title }}) ({{ tune.tune.tune_type.tune_type_char|title }})
             </a>
             {% if  tune.add_info != '' or tune.tune.tune_info != '' %}
-            Notes: {{ tune.add_info }}, {{ tune.tune.tune_info }}
+            Notes:{% if tune.add_info != '' %} {{ tune.add_info }}{% if tune.tune.tune_info != '' %},{% endif %}{% endif %} {{ tune.tune.tune_info }}
             {% endif %}
         </li>
     {% endfor %}
