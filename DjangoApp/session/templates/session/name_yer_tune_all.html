@@ -21,7 +21,11 @@
                 {{ name_yer_tune.tune.tune_type.tune_type_char|title }}
             </td>
             <td class='col-4'>
-                {{ name_yer_tune.session.date }}
+                {% if name_yer_tune.session.date == None %}
+                    Up Coming Session
+                {% else %}
+                    {{ name_yer_tune.session.date }}
+                {% endif %}
             </td>
         </tr>
     {% endfor %}
