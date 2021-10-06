@@ -29,9 +29,12 @@
     <div class="embed-responsive embed-responsive-16by9">
         <iframe class="embed-responsive-item" src="{{ name_yer_tune_detail.youtube_teaching_url }}" allowfullscreen></iframe>
     </div>
+    {% if name_yer_tune_detail.session.date != None %}
     <a href="{% url 'session_detail' name_yer_tune_detail.session.date.year  name_yer_tune_detail.session.date.month  name_yer_tune_detail.session.date.day %}">
         #NameYerTune First Session 
     </a>
+    {% else %}
+    {% endif %}
     <br>
     <br>
 {% endif %}

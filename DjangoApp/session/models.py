@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 
 # Create your models here.
 class tune_type(models.Model):
@@ -91,11 +92,18 @@ class played_tune(models.Model):
 class name_yer_tune(models.Model):
     name_yer_tune_id = models.AutoField(primary_key=True)
     tune = models.ForeignKey(tune, on_delete=models.CASCADE, verbose_name="Tune Name")
-    session = models.ForeignKey(session, on_delete=models.CASCADE, verbose_name="Session")
+    session = models.ForeignKey(session, on_delete=models.CASCADE, verbose_name="Session", null=True, blank=True)
     youtube_teaching_url = models.URLField('#nameyertune Youtube Teaching Embeded URL')
 
     def __str__(self):
+        if self.session == None:
+            return f'{self.tune.name1} (No Session Assigned)'
         return self.session.date.strftime("%m/%d/%Y") + " " + self.tune.name1
+    
+    def clean(self, *args, **kwargs):
+        super().clean()
+        if  "youtube.com/embed/" not in self.youtube_teaching_url:
+            raise ValidationError('YouTube url must be the www.youtube.com/embed/# formate')
 
 class tune_of_the_month(models.Model):
     tune_of_the_month_id = models.AutoField(primary_key=True)
