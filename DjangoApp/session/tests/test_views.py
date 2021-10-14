@@ -1,4 +1,4 @@
-# session/tests/test_views.py
+# Session/tests/test_views.py
 
 import pytest
 
