@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import session, played_tune_group, tune, played_tune, name_yer_tune, tune_of_the_month
+from .models import Session, PlayedTuneGroup, Tune, PlayedTune, NameYerTune, TuneOfTheMonth
 from django.db.models import Count, Aggregate, CharField
 
 # Code for Custom ORM Method
