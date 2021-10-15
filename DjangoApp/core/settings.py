@@ -144,3 +144,9 @@ STATIC_ROOT = Path(BASE_DIR) / 'static'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Needed settings to compress and caching files
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Propigate Errors For DEBUG=FALSE if needed
+DEBUG_PROPAGATE_EXCEPTIONS = True
