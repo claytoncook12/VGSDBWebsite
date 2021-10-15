@@ -17,18 +17,6 @@ class Migration(migrations.Migration):
             new_name='TuneType',
         ),
         migrations.RenameModel(
-            old_name='key',
-            new_name='Key',
-        ),
-        migrations.RenameModel(
-            old_name='tune',
-            new_name='Tune',
-        ),
-        migrations.RenameModel(
-            old_name='session',
-            new_name='Session',
-        ),
-        migrations.RenameModel(
             old_name='played_tune_group',
             new_name='PlayedTuneGroup',
         ),
