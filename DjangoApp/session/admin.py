@@ -6,6 +6,7 @@ from .models import Key, TuneType
 
 class PlayedTuneGroupInline(admin.TabularInline):
     model = PlayedTuneGroup
+    extra = 0
     show_change_link = True
 
 @admin.register(Session)
@@ -24,11 +25,13 @@ class TuneAdmin(admin.ModelAdmin):
 
 class PlayedTuneInline(admin.TabularInline):
     model = PlayedTune
+    extra = 0
 
 @admin.register(PlayedTuneGroup)
 class PlayedTuneGroupAdmin(admin.ModelAdmin):
     ordering = ('-session__date','-session_order_num')
     inlines = [PlayedTuneInline]
+    
 
 @admin.register(PlayedTune)
 class PlayedTuneAdmin(admin.ModelAdmin):
