@@ -75,30 +75,30 @@ class PlayedTuneGroup(models.Model):
 
 class PlayedTune(models.Model):
     played_tune_id = models.AutoField(primary_key=True)
-    Tune = models.ForeignKey(Tune, on_delete=models.CASCADE, verbose_name="Tune Name")
-    PlayedTuneGroup = models.ForeignKey(PlayedTuneGroup, on_delete=models.CASCADE, verbose_name="Played Tune Group")
+    tune = models.ForeignKey(Tune, on_delete=models.CASCADE, verbose_name="Tune Name")
+    played_tune_group = models.ForeignKey(PlayedTuneGroup, on_delete=models.CASCADE, verbose_name="Played Tune Group")
     Key = models.ForeignKey(Key, on_delete=models.CASCADE, verbose_name="Key of Tune", related_name='Key')
     group_order_num = models.IntegerField('Order Tune was played in Tune group.')
     add_info = models.CharField('Additional information about the Tune for this perticular time\
                                 it was played', max_length=300, blank=True)
 
     def __str__(self):
-        return self.PlayedTuneGroup.Session.date.strftime("%m/%d/%Y") + " - " +\
-            "Group " + str(self.PlayedTuneGroup.session_order_num) + ' - ' + \
+        return self.played_tune_group.session.date.strftime("%m/%d/%Y") + " - " +\
+            "Group " + str(self.played_tune_group.session_order_num) + ' - ' + \
             str(self.group_order_num) + " - " + \
             self.Tune.name1 + " (" + self.Key.key_type_char + ") " + "(" + \
             self.Tune.TuneType.tune_type_char + ")"
 
 class NameYerTune(models.Model):
     name_yer_tune_id = models.AutoField(primary_key=True)
-    Tune = models.ForeignKey(Tune, on_delete=models.CASCADE, verbose_name="Tune Name")
-    Session = models.ForeignKey(Session, on_delete=models.CASCADE, verbose_name="Session", null=True, blank=True)
+    tune = models.ForeignKey(Tune, on_delete=models.CASCADE, verbose_name="Tune Name")
+    session = models.ForeignKey(Session, on_delete=models.CASCADE, verbose_name="Session", null=True, blank=True)
     youtube_teaching_url = models.URLField('#nameyertune Youtube Teaching Embeded URL')
 
     def __str__(self):
-        if self.Session == None:
-            return f'{self.Tune.name1} (No Session Assigned)'
-        return self.Session.date.strftime("%m/%d/%Y") + " " + self.Tune.name1
+        if self.session == None:
+            return f'{self.tune.name1} (No Session Assigned)'
+        return self.session.date.strftime("%m/%d/%Y") + " " + self.tune.name1
     
     def clean(self, *args, **kwargs):
         super().clean()
@@ -107,9 +107,9 @@ class NameYerTune(models.Model):
 
 class TuneOfTheMonth(models.Model):
     tune_of_the_month_id = models.AutoField(primary_key=True)
-    Tune = models.ForeignKey(Tune, on_delete=models.CASCADE, verbose_name="Tune Name")
+    tune = models.ForeignKey(Tune, on_delete=models.CASCADE, verbose_name="Tune Name")
     published_date = models.DateField('Published Date')
     youtube_teaching_url = models.URLField('Tune of the Month Embeded URL')
 
     def __str__(self):
-        return self.published_date.strftime("%m/%d/%Y") + " " + self.Tune.name1
+        return self.published_date.strftime("%m/%d/%Y") + " " + self.tune.name1
