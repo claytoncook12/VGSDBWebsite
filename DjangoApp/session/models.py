@@ -70,7 +70,7 @@ class PlayedTuneGroup(models.Model):
     offertory = models.BooleanField('Is Tune group an offertory?')
 
     def __str__(self):
-        return self.Session.date.strftime("%m/%d/%Y") + ": Song Group " + str(self.session_order_num) + " [" + \
+        return self.session.date.strftime("%m/%d/%Y") + ": Song Group " + str(self.session_order_num) + " [" + \
         str(self.start_time) + " to " + str(self.end_time) + "]"
 
 class PlayedTune(models.Model):
