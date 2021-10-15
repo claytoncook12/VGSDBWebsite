@@ -26,12 +26,12 @@ class TuneAdmin(admin.ModelAdmin):
 class PlayedTuneInline(admin.TabularInline):
     model = PlayedTune
     extra = 0
+    raw_id_fields = ("tune",)
 
 @admin.register(PlayedTuneGroup)
 class PlayedTuneGroupAdmin(admin.ModelAdmin):
     ordering = ('-session__date','-session_order_num')
     inlines = [PlayedTuneInline]
-    
 
 @admin.register(PlayedTune)
 class PlayedTuneAdmin(admin.ModelAdmin):
