@@ -32,8 +32,8 @@ class PlayedTuneGroupAdmin(admin.ModelAdmin):
 
 @admin.register(PlayedTune)
 class PlayedTuneAdmin(admin.ModelAdmin):
-    date_hierarchy = "played_tune_group__session__date"
-    ordering = ('-played_tune_group__session__date','-played_tune_group__session_order_num','-group_order_num')
+    date_hierarchy = "PlayedTuneGroup__session__date"
+    ordering = ('-PlayedTuneGroup__session__date','-PlayedTuneGroup__session_order_num','-group_order_num')
     list_display = ("Tune","PlayedTuneGroup")
 
 @admin.register(NameYerTune)

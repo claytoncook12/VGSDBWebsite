@@ -63,7 +63,7 @@ class Session(models.Model):
 
 class PlayedTuneGroup(models.Model):
     played_tune_group_id = models.AutoField(primary_key=True)
-    Session = models.ForeignKey(Session, on_delete=models.CASCADE, verbose_name="Session")
+    session = models.ForeignKey(Session, on_delete=models.CASCADE, verbose_name="Session")
     session_order_num = models.IntegerField('Order of Tune Group')
     start_time = models.DurationField('Start Time of Group\nin Youtube Recording')
     end_time = models.DurationField('End Time of Group\nin Youtube Recording')
