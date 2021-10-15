@@ -32,7 +32,7 @@ class Tune(models.Model):
     name2 = models.CharField('Alternate Name', max_length=300, blank=True)
     name3 = models.CharField('Alternate Name', max_length=300, blank=True)
     name4 = models.CharField('Alternate Name', max_length=300, blank=True)
-    TuneType = models.ForeignKey(TuneType, on_delete=models.CASCADE, verbose_name="Tune Type")
+    tune_type = models.ForeignKey(TuneType, on_delete=models.CASCADE, verbose_name="Tune Type")
     the_session_url = models.URLField(blank=True)
     tune_info = models.CharField('Information about the Tune', max_length=300, blank=True)
 
@@ -45,7 +45,7 @@ class Tune(models.Model):
         super(Tune, self).save(force_insert, force_update, *args, **kwargs)
 
     def __str__(self):
-        return  self.name1 + " (" + self.TuneType.tune_type_char + ")"
+        return  self.name1 + " (" + self.tune_type.tune_type_char + ")"
 
 class Session(models.Model):
     session_id = models.AutoField(primary_key=True)
@@ -77,7 +77,7 @@ class PlayedTune(models.Model):
     played_tune_id = models.AutoField(primary_key=True)
     tune = models.ForeignKey(Tune, on_delete=models.CASCADE, verbose_name="Tune Name")
     played_tune_group = models.ForeignKey(PlayedTuneGroup, on_delete=models.CASCADE, verbose_name="Played Tune Group")
-    Key = models.ForeignKey(Key, on_delete=models.CASCADE, verbose_name="Key of Tune", related_name='Key')
+    key = models.ForeignKey(Key, on_delete=models.CASCADE, verbose_name="Key of Tune", related_name='Key')
     group_order_num = models.IntegerField('Order Tune was played in Tune group.')
     add_info = models.CharField('Additional information about the Tune for this perticular time\
                                 it was played', max_length=300, blank=True)
@@ -86,8 +86,8 @@ class PlayedTune(models.Model):
         return self.played_tune_group.session.date.strftime("%m/%d/%Y") + " - " +\
             "Group " + str(self.played_tune_group.session_order_num) + ' - ' + \
             str(self.group_order_num) + " - " + \
-            self.Tune.name1 + " (" + self.Key.key_type_char + ") " + "(" + \
-            self.Tune.TuneType.tune_type_char + ")"
+            self.tune.name1 + " (" + self.key.key_type_char + ") " + "(" + \
+            self.tune.tune_type.tune_type_char + ")"
 
 class NameYerTune(models.Model):
     name_yer_tune_id = models.AutoField(primary_key=True)
