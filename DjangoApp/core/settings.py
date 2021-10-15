@@ -149,4 +149,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Propigate Errors For DEBUG=FALSE if needed
-DEBUG_PROPAGATE_EXCEPTIONS = True
+DEBUG_PROPAGATE_EXCEPTIONS = config('DEBUG_PROPAGATE_EXCEPTIONS')
