@@ -3,16 +3,16 @@ from pathlib import Path
 import datetime
 
 from django.conf import settings
-from Session import models
+from session import models
 
-class tune_typeFactory(factory.django.DjangoModelFactory):
+class TuneTypeFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.TuneType
     
     tune_type_id = 1
     tune_type_char = "reel"
 
-class tuneFactory(factory.django.DjangoModelFactory):
+class TuneFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.Tune
     
@@ -21,11 +21,11 @@ class tuneFactory(factory.django.DjangoModelFactory):
     name2 = "Tune Name #2"
     name3 = "Tune Name #3"
     name4 = "Tune Name #4"
-    TuneType = factory.SubFactory(tune_typeFactory)
+    tune_type = factory.SubFactory(TuneTypeFactory)
     the_session_url = "https://www.youtube.com/embed/testthesessionurl"
     tune_info = "Some Test Tune Information"
 
-class sessionFactory(factory.django.DjangoModelFactory):
+class SessionFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.Session
     
@@ -34,11 +34,11 @@ class sessionFactory(factory.django.DjangoModelFactory):
     date = datetime.date(2021, 1, 1)
     youtube_url = "https://www.youtube.com/embed/testyoutubesessionurl"
 
-class name_yer_tuneFactory(factory.django.DjangoModelFactory):
+class NameYerTuneFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.NameYerTune
     
     name_yer_tune_id = 1
-    Tune = factory.SubFactory(tuneFactory)
-    Session = factory.SubFactory(sessionFactory)
+    tune = factory.SubFactory(TuneFactory)
+    session = factory.SubFactory(SessionFactory)
     youtube_teaching_url = "https://www.youtube.com/embed/testvalue"
