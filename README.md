@@ -2,7 +2,7 @@
 
 This is a website that keeps track of tunes that have been played on Shannon and Matt Heatons Online Irish Session.
 
-The project uses Django and Postgres deployed to docker container running on AWS Elastic Beanstalk.
+The project uses Django and Postgres deployed to a docker container running on AWS Elastic Beanstalk.
 
 Take a look at the site here, www.vgsdb.com.
 
