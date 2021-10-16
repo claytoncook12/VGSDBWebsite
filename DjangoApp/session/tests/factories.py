@@ -12,6 +12,12 @@ class TuneTypeFactory(factory.django.DjangoModelFactory):
     tune_type_id = 1
     tune_type_char = "reel"
 
+class KeyFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.Key
+    
+    key_type_char = "g"
+
 class TuneFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.Tune
@@ -31,8 +37,29 @@ class SessionFactory(factory.django.DjangoModelFactory):
     
     session_id = 1
     name = "Session Name 1"
-    date = datetime.date(2021, 1, 1)
+    date = datetime.date(2021, 1, 2)
     youtube_url = "https://www.youtube.com/embed/testyoutubesessionurl"
+
+class PlayedTuneGroupFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.PlayedTuneGroup
+    
+    session = factory.SubFactory(SessionFactory)
+    session_order_num = 1
+    start_time = datetime.timedelta(seconds=100)
+    end_time = datetime.timedelta(seconds=200)
+    offertory = True
+
+class PlayedTuneFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.PlayedTune
+    
+    tune = factory.SubFactory(TuneFactory)
+    played_tune_group = factory.SubFactory(PlayedTuneGroupFactory)
+    key = factory.SubFactory(KeyFactory)
+    group_order_num = 1
+    add_info = "some test info about the tune"
+
 
 class NameYerTuneFactory(factory.django.DjangoModelFactory):
     class Meta:
@@ -41,4 +68,12 @@ class NameYerTuneFactory(factory.django.DjangoModelFactory):
     name_yer_tune_id = 1
     tune = factory.SubFactory(TuneFactory)
     session = factory.SubFactory(SessionFactory)
+    youtube_teaching_url = "https://www.youtube.com/embed/testvalue"
+
+class TuneOfTheMonthFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.TuneOfTheMonth
+
+    tune = factory.SubFactory(TuneFactory)
+    published_date = datetime.date(2021, 10, 16)
     youtube_teaching_url = "https://www.youtube.com/embed/testvalue"
