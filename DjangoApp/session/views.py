@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import session, played_tune_group, tune, played_tune, name_yer_tune, tune_of_the_month
+from .models import Session, PlayedTuneGroup, Tune, PlayedTune, NameYerTune, TuneOfTheMonth
 from django.db.models import Count, Aggregate, CharField
 
 # Code for Custom ORM Method
@@ -22,11 +22,11 @@ def home(request):
     Landing page of session home page
     """
     
-    sessions = session.objects.all()
-    tunes = tune.objects.all()
-    name_yer_tunes = name_yer_tune.objects.all()
-    played_tunes = played_tune.objects.all()
-    tune_sets = played_tune_group.objects.all()
+    sessions = Session.objects.all()
+    tunes = Tune.objects.all()
+    name_yer_tunes = NameYerTune.objects.all()
+    played_tunes = PlayedTune.objects.all()
+    tune_sets = PlayedTuneGroup.objects.all()
 
     
     return render(request, 'session/home.html', {'tunes_count': tunes.count(),
@@ -47,7 +47,7 @@ def full_yt_session_list(request):
     Full List of Youtube Sessions
     """
 
-    sessions = session.objects.order_by('-date')
+    sessions = Session.objects.order_by('-date')
 
     return render(request, 'session/full_yt_session_list.html', {'sessions': sessions})
 
@@ -58,16 +58,16 @@ def session_detail(request, year, month, day):
 
     # Get Session If Avaliable
     url_date = str(year) + '-' + str(month) + "-" + str(day)
-    session_id_detail = get_object_or_404(session, date=url_date)
+    session_id_detail = get_object_or_404(Session, date=url_date)
 
     # Get embed values
     videoId = session_id_detail.youtube_url.split('embed/')[1]
 
     # Get Tunes Played
     tune_groups = []
-    r = played_tune_group.objects.filter(session=session_id_detail).order_by('session_order_num')
+    r = PlayedTuneGroup.objects.filter(session=session_id_detail).order_by('session_order_num')
     for group in r:
-        tune_groups.append({'group': group, 'played_tunes': played_tune.objects.filter(played_tune_group=group).order_by('group_order_num')})
+        tune_groups.append({'group': group, 'played_tunes': PlayedTune.objects.filter(played_tune_group=group).order_by('group_order_num')})
 
     return render(request, 'session/session_detail.html', {'session_id_detail': session_id_detail,
                                                            'videoId': videoId,
@@ -79,7 +79,7 @@ def tunes_all(request):
     Display all Tunes in Database
     """
 
-    played_tunes = played_tune.objects.values('tune__tune_id'
+    played_tunes = PlayedTune.objects.values('tune__tune_id'
                 ).annotate(Count('tune__tune_id')
                 ).annotate(keys=Concat('key__key_type_char', distinct=True)
                 ).order_by('tune__name1'
@@ -94,22 +94,22 @@ def tune_detail(request, tune_id):
     """
 
     # Get Tune
-    tune_id_detail = get_object_or_404(tune, pk=tune_id) 
+    tune_id_detail = get_object_or_404(Tune, pk=tune_id) 
 
     # Previous Times It Has Been Played
-    played_tune_all =  played_tune.objects.filter(tune=tune_id_detail).order_by('-played_tune_group__session__date')
+    played_tune_all =  PlayedTune.objects.filter(tune=tune_id_detail).order_by('-played_tune_group__session__date')
     played_tune_all_count = played_tune_all.count()
 
     # NameYerTune Video if Present
     try:
-        name_yer_tune_detail = name_yer_tune.objects.get(tune=tune_id_detail)
-    except name_yer_tune.DoesNotExist:
+        name_yer_tune_detail = NameYerTune.objects.get(tune=tune_id_detail)
+    except NameYerTune.DoesNotExist:
         name_yer_tune_detail = None
     
     # tune_of_the_month Video if Present
     try:
-        tune_of_the_month_detail = tune_of_the_month.objects.get(tune=tune_id_detail)
-    except tune_of_the_month.DoesNotExist:
+        tune_of_the_month_detail = TuneOfTheMonth.objects.get(tune=tune_id_detail)
+    except TuneOfTheMonth.DoesNotExist:
         tune_of_the_month_detail = None
 
     return render(request, 'session/tune_detail.html', {'tune_id_detail': tune_id_detail,
@@ -123,16 +123,16 @@ def nameyertune_all(request):
     All the #NameYerTune Tunes
     """
 
-    name_yer_tunes_all = name_yer_tune.objects.all().order_by('-session__date')
+    name_yer_tunes_all = NameYerTune.objects.all().order_by('-session__date')
 
     return render(request, 'session/name_yer_tune_all.html', {'name_yer_tunes_all': name_yer_tunes_all})
 
 def youtube_loop_test1(request):
 
-    youtube_video = session.objects.get(date='2020-11-21')
+    youtube_video = Session.objects.get(date='2020-11-21')
     videoId = youtube_video.youtube_url.split('embed/')[1]
 
-    r = played_tune_group.objects.filter(session=youtube_video)
+    r = PlayedTuneGroup.objects.filter(session=youtube_video)
 
     return render(request, 'session/youtube_loop_test2.html', {'youtube_video': youtube_video,
                                                                'videoId': videoId,

@@ -1,10 +1,10 @@
-# session/tests/test_models.py
+# Session/tests/test_models.py
 
 import pytest
 from pathlib import Path
 
 from django.conf import settings
-from session.tests import factories
+from Session.tests import factories
 
 from django.core.exceptions import ValidationError
 
@@ -16,7 +16,7 @@ class Testname_yer_tune:
     
     def test_str(self):
         obj = factories.name_yer_tuneFactory()
-        assert str(obj) == "01/01/2021 tune name #1", "Should have specific str"
+        assert str(obj) == "01/01/2021 Tune name #1", "Should have specific str"
     
     def test_clean1(self):
         with pytest.raises(ValidationError):
