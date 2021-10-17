@@ -30,7 +30,7 @@ class TestFullYtSessionList:
 
 @pytest.mark.django_db
 class TestSessionDetail:
-    def test_session_detail_200(self):
+    def test_session_detail(self):
         
         obj = factories.SessionFactory(
             date = datetime.date(2021, 10, 2)
@@ -40,4 +40,5 @@ class TestSessionDetail:
                               kwargs={'year': 2021, 'month': 10, 'day': 2}))
         
         assert response.status_code == 200, "Get 200 status for session.views.session_detail"
-        
+
+        assert obj.name.title() in response.content.decode(), "The session.session_detail view shows session.name"
