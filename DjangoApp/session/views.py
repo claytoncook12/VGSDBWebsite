@@ -127,13 +127,6 @@ def nameyertune_all(request):
 
     return render(request, 'session/name_yer_tune_all.html', {'name_yer_tunes_all': name_yer_tunes_all})
 
-def youtube_loop_test1(request):
+def youtube_loop_test2(request):
 
-    youtube_video = Session.objects.get(date='2020-11-21')
-    videoId = youtube_video.youtube_url.split('embed/')[1]
-
-    r = PlayedTuneGroup.objects.filter(session=youtube_video)
-
-    return render(request, 'session/youtube_loop_test2.html', {'youtube_video': youtube_video,
-                                                               'videoId': videoId,
-                                                               'tune_groups': r})
+    return render(request, 'session/youtube_loop_test2.html')
