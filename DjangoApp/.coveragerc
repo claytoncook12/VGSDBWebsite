@@ -1,0 +1,11 @@
+# DjangoApp/.coveragerc
+[run]
+omit =
+    *apps.py,
+    *migrations/*,
+    *settings*,
+    *tests/*,
+    *urls.py,
+    *wsgi.py,
+    *asgi.py,
+    manage.py
