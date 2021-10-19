@@ -23,7 +23,6 @@ jobs:
         echo "SECRET_KEY = ${{ secrets.SECRET_KEY }}" >> DjangoApp/.env
         echo "DEBUG = ${{ secrets.DEBUG }}" >> DjangoApp/.env
         echo "ALLOWED_HOSTS = ${{ secrets.ALLOWED_HOSTS }}" >> DjangoApp/.env
-        cat DjangoApp/.env
     - name:   Install dependencies
       working-directory: ./DjangoApp #Run Tests in DjangApp folder
       run: |
@@ -56,7 +55,6 @@ jobs:
           echo "SECRET_KEY = ${{ secrets.SECRET_KEY }}" >> DjangoApp/.env
           echo "DEBUG = ${{ secrets.DEBUG }}" >> DjangoApp/.env
           echo "ALLOWED_HOSTS = ${{ secrets.ALLOWED_HOSTS }}" >> DjangoApp/.env
-          cat DjangoApp/.env
       
       # Zip All Files to deploy to AWS
       - name: Generate Deployment Package
