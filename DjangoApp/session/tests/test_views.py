@@ -8,6 +8,7 @@ from django.urls import reverse
 
 from session.tests import factories
 
+
 @pytest.mark.django_db
 class TestHomeView:
     def test_session_home_200(self):
@@ -15,11 +16,13 @@ class TestHomeView:
         response = client.get(reverse('home'))
         assert response.status_code == 200, "Get 200 status For session.views.home"
 
+
 class TestAboutView:
     def test_session_about_200(self):
         client = Client()
         response = client.get(reverse('about'))
         assert response.status_code == 200, "Get 200 status for session.views.about"
+
 
 @pytest.mark.django_db
 class TestFullYtSessionList:
@@ -28,18 +31,18 @@ class TestFullYtSessionList:
         response = client.get(reverse('full_yt_session_list'))
         assert response.status_code == 200, "Get 200 status for session.views.full_yt_session_list"
 
+
 @pytest.mark.django_db
 class TestSessionDetail:
-    def test_session_detail(self):
-        
+    def test_session_detail(self):        
         obj1 = factories.SessionFactory(
-            date = datetime.date(2021, 10, 2)
+            date=datetime.date(2021, 10, 2)
         )
         obj2 = factories.PlayedTuneGroupFactory(
-            session = obj1
+            session=obj1
         )
         obj3 = factories.PlayedTuneFactory(
-            played_tune_group = obj2
+            played_tune_group=obj2
         )
         
         client = Client()
@@ -57,6 +60,7 @@ class TestSessionDetail:
         # Test Display of PlayedTune
         assert obj3.tune.name1.title() in response.content.decode(), "The session.session_Detail view shows PlayedTune information"
 
+
 @pytest.mark.django_db
 class TestTunesAll:
     @pytest.mark.skip(reason="""Uses session.views.Concat(Aggregate) to display keys that have been
@@ -67,7 +71,7 @@ class TestTunesAll:
         obj1 = factories.TuneFactory()
 
         obj2 = factories.PlayedTuneFactory(
-            tune = obj1
+            tune=obj1
         )
 
         client = Client()
@@ -88,13 +92,13 @@ class TestTuneDetail:
 
         # Setup Tune and Played Once
         obj1 = factories.SessionFactory(
-            date = datetime.date(2021, 10, 2)
+            date=datetime.date(2021, 10, 2)
         )
         obj2 = factories.PlayedTuneGroupFactory(
-            session = obj1
+            session=obj1
         )
         obj3 = factories.PlayedTuneFactory(
-            played_tune_group = obj2
+            played_tune_group=obj2
         )
 
         client = Client()
@@ -111,6 +115,7 @@ class TestTuneDetail:
             in response.content.decode(), "Test That Tune.tune_type is display"
         assert PLAYED_TIMES_STR in response.content.decode(), "Test that Tune shows as played once"
 
+
 @pytest.mark.django_db
 class TestNameyertuneAll:
     def test_nameyertune_all(self):
@@ -123,6 +128,7 @@ class TestNameyertuneAll:
 
         # Test Deiplay of Proper NameYerTune data
         assert obj.tune.name1.title() in response.content.decode(), "Test that Tune.name1 shows"
+
 
 @pytest.mark.django_db
 class TestYoutubeLoopTest2:
