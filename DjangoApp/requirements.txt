@@ -6,3 +6,4 @@ gunicorn
 factory_boy
 pytest-django
 pytest-cov
+flake8
