@@ -23,7 +23,6 @@ jobs:
         echo "SECRET_KEY = ${{ secrets.SECRET_KEY }}" >> DjangoApp/.env
         echo "DEBUG = ${{ secrets.DEBUG }}" >> DjangoApp/.env
         echo "ALLOWED_HOSTS = ${{ secrets.ALLOWED_HOSTS }}" >> DjangoApp/.env
-        cat DjangoApp/.env
     - name:   Install dependencies
       working-directory: ./DjangoApp #Run Tests in DjangApp folder
       run: |
@@ -31,12 +30,14 @@ jobs:
         pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Lint with flake8
+      working-directory: ./DjangoApp #Run Tests in DjangApp folder
       run: |
         # stop the build if there are Python syntax errors or undefined names
         #flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         #flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
+      working-directory: ./DjangoApp #Run Tests in DjangApp folder
       run: |
         pytest
         
@@ -54,7 +55,6 @@ jobs:
           echo "SECRET_KEY = ${{ secrets.SECRET_KEY }}" >> DjangoApp/.env
           echo "DEBUG = ${{ secrets.DEBUG }}" >> DjangoApp/.env
           echo "ALLOWED_HOSTS = ${{ secrets.ALLOWED_HOSTS }}" >> DjangoApp/.env
-          cat DjangoApp/.env
       
       # Zip All Files to deploy to AWS
       - name: Generate Deployment Package
