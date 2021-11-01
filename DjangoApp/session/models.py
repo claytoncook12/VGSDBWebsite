@@ -49,7 +49,7 @@ class Tune(models.Model):
 
 class Session(models.Model):
     session_id = models.AutoField(primary_key=True)
-    name = models.CharField('Session Name', max_length=300, unique=True)
+    name = models.CharField('Session Name', max_length=300)
     date = models.DateField('Session Date')
     youtube_url = models.URLField('Session Youtube URL', blank=True)
 
