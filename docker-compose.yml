@@ -14,8 +14,7 @@ services:
   web:
     build: 
       context: ./DjangoApp
-      dockerfile: Dockerfile.dev
-    command: python manage.py runserver 0.0.0.0:8000
+      dockerfile: Dockerfile
     volumes:
       - ./DjangoApp:/code
     ports:
