@@ -88,6 +88,17 @@ if 'RDS_HOSTNAME' in os.environ:
             'PORT': os.environ['RDS_PORT'],
         }
     }
+if config('DB_SETUP') == 'local':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'postgres',
+            'USER': 'postgres',
+            'PASSWORD': 'postgres',
+            'HOST': 'localhost',
+            'PORT': 6543,
+        }
+    }
 else:
     DATABASES = {
         'default': {
@@ -95,8 +106,8 @@ else:
             'NAME': 'postgres',
             'USER': 'postgres',
             'PASSWORD': 'postgres',
-            'HOST': 'localhost', #db or localhost
-            'PORT': 6543, #5432 or 6543
+            'HOST': 'db', #db or localhost
+            'PORT': 5432, #5432 or 6543
         }
     }
 
