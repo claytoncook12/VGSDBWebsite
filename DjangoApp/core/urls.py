@@ -27,4 +27,5 @@ urlpatterns = [
     path('sessions/<int:year>/<str:month>/<int:day>', views.session_detail, name='session_detail'),
     path('nameyertune/all/', views.nameyertune_all, name='nameyertune_all'),
     path('youtube_loop_test2/', views.youtube_loop_test2, name='youtube_loop_test2'),
+    path('adminlinks/',views.admin_links, name='admin_links'),
 ]

@@ -1,4 +1,5 @@
 # Session/tests/test_views.py
+from django.contrib.auth.models import User
 
 import pytest
 import datetime
@@ -8,6 +9,7 @@ from django.urls import reverse
 
 from session.tests import factories
 
+PASSWORD = "password"
 
 @pytest.mark.django_db
 class TestHomeView:
@@ -138,3 +140,26 @@ class TestYoutubeLoopTest2:
         response = client.get(reverse('youtube_loop_test2'))
 
         assert response.status_code == 200, "Get 200 status for session.views.youtube_loop_test2"
+    
+@pytest.mark.django_db
+class TestAdminLinksTab:
+    def test_admin_links_view_normal_user(Self):
+        client = Client()
+        response = client.get(reverse('admin_links'))
+
+        assert response.status_code == 302, "302 status for session.views.adminlinks when user is not superuser in"
+    
+    def test_admin_links_view_superuser_user(Self):
+        # Create SuperUser for testing
+        my_admin = User.objects.create_superuser('myuser', 'myemail@test.com', PASSWORD)
+        
+        client = Client()
+        # You'll need to log him in before you can send requests through the client
+        client.login(username=my_admin.username, password=PASSWORD)
+        
+        response = client.get(reverse('admin_links'))
+        assert response.status_code == 200, "200 status for session.views.adminlinks when user is superuser"
+
+        
+
+

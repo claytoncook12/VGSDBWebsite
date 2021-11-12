@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.decorators import user_passes_test
 from .models import Session, PlayedTuneGroup, Tune, PlayedTune, NameYerTune, TuneOfTheMonth
 from django.db.models import Count, Aggregate, CharField
 
@@ -130,3 +131,8 @@ def nameyertune_all(request):
 def youtube_loop_test2(request):
 
     return render(request, 'session/youtube_loop_test2.html')
+
+@user_passes_test(lambda u: u.is_superuser)
+def admin_links(request):
+
+    return render(request, 'session/admin_links.html')
