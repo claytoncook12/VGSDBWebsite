@@ -160,6 +160,21 @@ class TestAdminLinksTab:
         response = client.get(reverse('admin_links'))
         assert response.status_code == 200, "200 status for session.views.adminlinks when user is superuser"
 
+@pytest.mark.django_db
+class TestSessionJSON:
+    def test_session_json_normal_user(self):
+        client = Client()
+        response = client.get(reverse('session_json'))
+
+        assert response.status_code == 302, "302 status for session.views.session_json when user is not superuser in"
+    
+    def test_asession_json_view_superuser_user(Self):
+        # Create SuperUser for testing
+        my_admin = User.objects.create_superuser('myuser', 'myemail@test.com', PASSWORD)
         
-
-
+        client = Client()
+        # You'll need to log him in before you can send requests through the client
+        client.login(username=my_admin.username, password=PASSWORD)
+        
+        response = client.get(reverse('session_json'))
+        assert response.status_code == 200, "200 status for session.views.session_json when user is superuser"
