@@ -168,7 +168,7 @@ class TestSessionJSON:
 
         assert response.status_code == 302, "302 status for session.views.session_json when user is not superuser in"
     
-    def test_asession_json_view_superuser_user(Self):
+    def test_session_json_view_superuser_user(Self):
         # Create SuperUser for testing
         my_admin = User.objects.create_superuser('myuser', 'myemail@test.com', PASSWORD)
         

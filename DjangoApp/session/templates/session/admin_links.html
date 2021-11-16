@@ -4,5 +4,11 @@
 {% block content %}
 <h1>Useful Admin Links</h1>
 <hr>
-
+<div class="row">
+    <div class="col text-center">
+        <a class="btn btn-outline-dark btn-lg" href="{% url 'session_json'%}">
+            Download VGS Database JSON
+        </a>
+    </div>
+</div>
 {% endblock %}

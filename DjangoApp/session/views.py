@@ -1,3 +1,5 @@
+import sys
+import os
 from datetime import datetime
 from pathlib import Path
 from django.shortcuts import render, get_object_or_404
@@ -150,11 +152,22 @@ def session_json(request):
     date_time = now.strftime("%Y-%m-%d %H-%M-%S")
     json_file_name = f'{date_time}sessiondb.json'
     path = Path(settings.BASE_DIR) / 'datadump'
+    json_file = path / json_file_name
 
-    # Create File
-    output = open(path / json_file_name,'w+') # Point stdout at a file for dumping data to.
-    call_command('dumpdata', 'session', format='json', indent=3, stdout=output)
-    output.close()
+    # Point SystemOutput to file, write to file, and close
+    sys.stdout = open(json_file, 'w+') # Point stdout at a file for dumping data too.
+    call_command('dumpdata', indent=3)
+    sys.stdout.close()
 
-    response = HttpResponse(content_type="text/plain")
+    # Write File Contents to Temp File
+    with open(json_file, 'r') as f:
+        file_data = f.read()
+
+    # Delete Out File Location
+    os.remove(json_file)
+
+    # Create Reponse to Send
+    response = HttpResponse(file_data, content_type="text/plain")
     response['Content-Disposition'] = f'attachment; filename={json_file_name}'
+
+    return response
