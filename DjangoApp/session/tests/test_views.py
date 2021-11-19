@@ -18,7 +18,7 @@ class TestHomeView:
         response = client.get(reverse('home'))
         assert response.status_code == 200, "Get 200 status For session.views.home"
 
-
+@pytest.mark.django_db
 class TestAboutView:
     def test_session_about_200(self):
         client = Client()
