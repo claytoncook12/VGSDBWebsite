@@ -81,6 +81,7 @@ class PlayedTuneGroup(models.Model):
     start_time = models.DurationField('Start Time of Group\nin Youtube Recording')
     end_time = models.DurationField('End Time of Group\nin Youtube Recording')
     offertory = models.BooleanField('Is Tune group an offertory?')
+    teaching = models.BooleanField('Is Tune a Teaching Set?', default=False)
 
     def __str__(self):
         return self.session.date.strftime("%m/%d/%Y") + ": Song Group " + str(self.session_order_num) + " [" + \
