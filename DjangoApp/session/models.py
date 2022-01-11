@@ -26,6 +26,13 @@ class Key(models.Model):
     def __str__(self):
         return self.key_type_char
 
+class ShannonTeachingBookRef(models.Model):
+    title = models.CharField("Name of Shannon Teaching Book", max_length=100)
+    resource_url = models.URLField("Resource URL for tune")
+
+    def __str__(self):
+        return self.title
+
 class Tune(models.Model):
     tune_id = models.AutoField(primary_key=True)
     name1 = models.CharField('Tune Name', max_length=300)
@@ -35,6 +42,12 @@ class Tune(models.Model):
     tune_type = models.ForeignKey(TuneType, on_delete=models.CASCADE, verbose_name="Tune Type")
     the_session_url = models.URLField(blank=True)
     tune_info = models.CharField('Information about the Tune', max_length=300, blank=True)
+    common_core = models.BooleanField("Common Core Tune", default=False)
+    shannon_teaching_book_ref = models.ForeignKey(ShannonTeachingBookRef,
+                                                  on_delete=models.CASCADE,
+                                                  verbose_name="Shannon Teaching Reference",
+                                                  null=True,
+                                                  blank=True)
 
     # Force lowercase values only
     def save(self, force_insert=False, force_update=False, *args, **kwargs):
@@ -68,6 +81,7 @@ class PlayedTuneGroup(models.Model):
     start_time = models.DurationField('Start Time of Group\nin Youtube Recording')
     end_time = models.DurationField('End Time of Group\nin Youtube Recording')
     offertory = models.BooleanField('Is Tune group an offertory?')
+    teaching = models.BooleanField('Is Tune a Teaching Set?', default=False)
 
     def __str__(self):
         return self.session.date.strftime("%m/%d/%Y") + ": Song Group " + str(self.session_order_num) + " [" + \
