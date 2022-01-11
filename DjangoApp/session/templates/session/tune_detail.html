@@ -18,6 +18,12 @@
 <h3>
     Tune Type: {{ tune_id_detail.tune_type.tune_type_char|title }}<br>
 </h3>
+
+<h4>
+    {% if tune_id_detail.common_core %}
+        Common Core Tune
+    {% endif %}
+</h4>
 <br>
 
 <h5>

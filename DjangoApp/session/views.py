@@ -91,7 +91,7 @@ def tunes_all(request):
                 ).annotate(Count('tune__tune_id')
                 ).annotate(keys=Concat('key__key_type_char', distinct=True)
                 ).order_by('tune__name1'
-                ).values('tune__tune_id','tune__name1', 'tune__tune_id__count', 'keys','tune__tune_type__tune_type_char')
+                ).values('tune__tune_id','tune__name1', 'tune__tune_id__count', 'keys','tune__tune_type__tune_type_char','tune__common_core')
 
     return render(request, 'session/tunes_all.html', {'played_tunes': played_tunes})
 

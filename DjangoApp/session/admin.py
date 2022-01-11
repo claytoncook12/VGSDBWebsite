@@ -20,8 +20,8 @@ class SessionAdmin(admin.ModelAdmin):
 class TuneAdmin(admin.ModelAdmin):
     ordering = ("name1",)
     search_fields = ("name1","name2","name3","name4")
-    list_filter = ("tune_type",)
-    list_display = ("name1","name2","tune_type")
+    list_filter = ("tune_type","common_core")
+    list_display = ("name1","name2","tune_type","common_core")
 
 class PlayedTuneInline(admin.TabularInline):
     model = PlayedTune

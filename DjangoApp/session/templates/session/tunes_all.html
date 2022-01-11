@@ -22,7 +22,8 @@
         <thead>
             <tr class="header d-flex">
                 <th class='col-sm-4 col-md-4'>Name</th>
-                <th class='col-sm-4 col-md-4'>Type</th>
+                <th class='col-sm-3 col-md-3'>Type</th>
+                <th class='col-sm-1 col-md-1'>CC</th>
                 <th class='col-sm-4 col-md-2'>Key(s)</th>
                 <th class='d-none d-md-block col-lg-2 th-sort-numeric'>Times Played</th>
               </tr>
@@ -44,8 +45,13 @@
                 {% endif %} 
                 </a>
             </td>
-            <td class='col-sm-4 col-md-4'>
+            <td class='col-sm-3 col-md-3'>
                 {{ tune.tune__tune_type__tune_type_char }}
+            </td>
+            <td class='col-sm-1 col-md-1'>
+                {% if tune.tune__common_core %}
+                    <span>&#10003;</span>
+                {% endif %}
             </td>
             <td class='col-sm-4 col-md-2'>
                 {% for key in tune.keys %}
