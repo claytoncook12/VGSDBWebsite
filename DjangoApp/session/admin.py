@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import Tune, Session, PlayedTuneGroup
 from .models import PlayedTune, NameYerTune, TuneOfTheMonth
-from .models import Key, TuneType
+from .models import Key, TuneType, ShannonTeachingBookRef
 
 
 class PlayedTuneGroupInline(admin.TabularInline):
@@ -57,3 +57,7 @@ class KeyAdmin(admin.ModelAdmin):
 @admin.register(TuneType)
 class TuneTypeAdmin(admin.ModelAdmin):
     ordering = ('tune_type_char',)
+
+@admin.register(ShannonTeachingBookRef)
+class ShannonTeachingBookRefAdmin(admin.ModelAdmin):
+    ordering = ('title',)

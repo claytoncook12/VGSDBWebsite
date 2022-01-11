@@ -26,6 +26,15 @@
 </h4>
 <br>
 
+{% if tune_id_detail.shannon_teaching_book_ref.id %}
+<h5>
+    Resource:
+        <a href="{{ tune_id_detail.shannon_teaching_book_ref.resource_url }}" target="_blank">
+            {{ tune_id_detail.shannon_teaching_book_ref.title }}
+        </a> 
+</h5>
+{% endif %}
+
 <h5>
     Notes: {{ tune_id_detail.tune_info }}<br>
 </h5>
