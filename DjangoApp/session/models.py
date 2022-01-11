@@ -35,6 +35,7 @@ class Tune(models.Model):
     tune_type = models.ForeignKey(TuneType, on_delete=models.CASCADE, verbose_name="Tune Type")
     the_session_url = models.URLField(blank=True)
     tune_info = models.CharField('Information about the Tune', max_length=300, blank=True)
+    common_core = models.BooleanField("Common Core Tune", default=False)
 
     # Force lowercase values only
     def save(self, force_insert=False, force_update=False, *args, **kwargs):
