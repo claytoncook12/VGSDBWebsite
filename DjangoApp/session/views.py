@@ -156,7 +156,7 @@ def session_json(request):
 
     # Point SystemOutput to file, write to file, and close
     sys.stdout = open(json_file, 'w+') # Point stdout at a file for dumping data too.
-    call_command('dumpdata', indent=3)
+    call_command('dumpdata', 'session', indent=3) # Data from session app
     sys.stdout.close()
 
     # Write File Contents to Temp File
