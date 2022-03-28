@@ -59,14 +59,14 @@ def full_yt_session_list(request):
 
     return render(request, 'session/full_yt_session_list.html', {'sessions': sessions})
 
-def session_detail(request, year, month, day):
+def session_detail(request, session_id):
     """
     Display of Youtube Session Details
     """
 
     # Get Session If Avaliable
-    url_date = str(year) + '-' + str(month) + "-" + str(day)
-    session_id_detail = get_object_or_404(Session, date=url_date)
+    session_id_detail = get_object_or_404(Session, session_id=session_id)
+    session_date = session_id_detail.date
 
     # Get embed values
     videoId = session_id_detail.youtube_url.split('embed/')[1]
@@ -80,7 +80,8 @@ def session_detail(request, year, month, day):
     return render(request, 'session/session_detail.html', {'session_id_detail': session_id_detail,
                                                            'videoId': videoId,
                                                            'tune_groups_buttons': r,
-                                                           'tune_groups': tune_groups})
+                                                           'tune_groups': tune_groups,
+                                                           'session_date': session_date})
 
 def tunes_all(request):
     """

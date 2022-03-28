@@ -14,7 +14,7 @@
                 {{ session.date }}
             </td>
             <td class='col-8'>
-                <a href="{% url 'session_detail' session.date.year session.date.month session.date.day %}">
+                <a href="{% url 'session_detail' session.session_id %}">
                     {{ session.name|title }}
                 </a>
             </td>

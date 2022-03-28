@@ -49,7 +49,7 @@ class TestSessionDetail:
         
         client = Client()
         response = client.get(reverse('session_detail',
-                              kwargs={'year': 2021, 'month': 10, 'day': 2}))
+                              kwargs={'session_id': 1}))
         
         assert response.status_code == 200, "Get 200 status for session.views.session_detail"
 

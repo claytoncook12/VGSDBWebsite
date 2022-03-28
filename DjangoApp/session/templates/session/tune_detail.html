@@ -45,7 +45,7 @@
         <iframe class="embed-responsive-item" src="{{ name_yer_tune_detail.youtube_teaching_url }}" allowfullscreen></iframe>
     </div>
     {% if name_yer_tune_detail.session.date != None %}
-    <a href="{% url 'session_detail' name_yer_tune_detail.session.date.year  name_yer_tune_detail.session.date.month  name_yer_tune_detail.session.date.day %}">
+    <a href="{% url 'session_detail' name_yer_tune_detail.session.session_id %}">
         #NameYerTune First Session 
     </a>
     {% else %}
@@ -78,7 +78,7 @@
         {% for played_tune in played_tune_all %}
         <tr class='d-flex' style="">
             <td class='col-3'>
-                <a href="{% url 'session_detail' played_tune.played_tune_group.session.date.year played_tune.played_tune_group.session.date.month played_tune.played_tune_group.session.date.day %}">
+                <a href="{% url 'session_detail' played_tune.played_tune_group.session.session_id %}">
                     {{ played_tune.played_tune_group.session.date }}
                 </a>
             </td>

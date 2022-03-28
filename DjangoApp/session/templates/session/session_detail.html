@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="{% static 'session/css/session_detail.css' %}">
 
 <h1>{{ session_id_detail.name|title }}</h1>
+<h2>{{ session_date|date:"F d, Y" }}</h2>
 <div class="embed-responsive embed-responsive-16by9">
     <div class="embed-responsive-item" id="player"></div>
 </div>
