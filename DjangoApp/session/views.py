@@ -13,7 +13,7 @@ from django.db.models import Count, Aggregate, CharField
 # Code for Custom ORM Method
 class Concat(Aggregate):
     """ORM is used to group other fields. This is equivalent to group_concat"""
-    function = 'array_agg'
+    function = 'GROUP_CONCAT'
     template = '%(function)s(%(distinct)s%(expressions)s)'
     allow_distinct = True
  
