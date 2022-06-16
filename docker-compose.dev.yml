@@ -2,23 +2,16 @@ version: "3.3"
    
 services:
   db:
-    image: postgres
+    image: mysql
+    restart: always
     volumes:
-      - ./DjangoApp/data/db:/var/lib/postgresql/data
+      - ./DjangoApp/data/db:/var/lib/mysql
     environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
     ports:
-      - "6543:5432"
-  web:
-    build: 
-      context: ./DjangoApp
-      dockerfile: Dockerfile.dev
-    command: python manage.py runserver 0.0.0.0:8000
-    volumes:
-      - ./DjangoApp:/code
-    ports:
-      - "8000:8000"
-    depends_on:
-      - db
+      - "3306:3306"
+    expose:
+      - '3306'
