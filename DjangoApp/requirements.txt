@@ -7,4 +7,3 @@ factory_boy
 pytest-django
 pytest-cov
 flake8
-django-request
