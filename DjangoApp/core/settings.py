@@ -86,6 +86,7 @@ if config('DB_SETUP') == 'local':
             'PASSWORD': 'password',
             'HOST': 'localhost',
             'PORT': 3306,
+            'sql_mode': 'STRICT_TRANS_TABLES',
         }
     }
 else:
@@ -97,6 +98,7 @@ else:
             'PASSWORD': 'password',
             'HOST': 'db',
             'PORT': 3306,
+            'sql_mode': 'STRICT_TRANS_TABLES', # Set sql_mode due to this error ?: (mysql.W002) MySQL Strict Mode is not set for database connection 'default' HINT: MySQL's Strict Mode fixes many data integrity problems in MySQL, such as data truncation upon insertion, by escalating warnings into errors. It is strongly recommended you activate it. See: https://docs.djangoproject.com/en/3.2/ref/databases/#mysql-sql-mode
         }
     }
 
