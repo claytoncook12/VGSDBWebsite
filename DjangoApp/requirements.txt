@@ -1,8 +1,14 @@
-Django>=3.0,<4.0
+# cPanel Deployment Notes
+# cPanel Deployment Useing Python --version 3.9.12
+
+# Deployment Requirements 
+Django==3.2.13
 mysql-connector-python
 python-decouple
 whitenoise
 gunicorn
+
+# Testing Requirements
 factory_boy
 pytest-django
 pytest-cov
