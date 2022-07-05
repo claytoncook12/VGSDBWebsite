@@ -92,10 +92,10 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'db',
-            'USER': 'user',
-            'PASSWORD': 'password',
-            'HOST': 'db',
+            'NAME': config('PROD_DB_NAME'),
+            'USER': config('PROD_DB_USER'),
+            'PASSWORD': config('PROD_DB_PASSWORD'),
+            'HOST': config('PROD_DB_HOST'),
             'PORT': 3306,
         }
     }
