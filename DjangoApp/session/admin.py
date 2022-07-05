@@ -14,7 +14,7 @@ class SessionAdmin(admin.ModelAdmin):
     ordering = ('-date',)
     list_display = ("date","name")
     inlines = [PlayedTuneGroupInline]
-    date_hierarchy = "date"
+    #date_hierarchy = "date" note: error with  ENGINE:"mysql.connector.django"
 
 @admin.register(Tune)
 class TuneAdmin(admin.ModelAdmin):
@@ -32,15 +32,15 @@ class PlayedTuneInline(admin.TabularInline):
 class PlayedTuneGroupAdmin(admin.ModelAdmin):
     ordering = ('-session__date','-session_order_num')
     inlines = [PlayedTuneInline]
-    date_hierarchy = "session__date"
+    #date_hierarchy = "session__date" note: error with  ENGINE:"mysql.connector.django"
 
 @admin.register(PlayedTune)
 class PlayedTuneAdmin(admin.ModelAdmin):
-    date_hierarchy = "played_tune_group__session__date"
     ordering = ('-played_tune_group__session__date','-played_tune_group__session_order_num','-group_order_num')
     list_display = ("tune_id","tune","played_tune_group")
     raw_id_fields = ("tune","played_tune_group")
     search_fields = ("tune__name1","tune__name2","tune__name3","tune__name4")
+    #date_hierarchy = "played_tune_group__session__date" note: error with  ENGINE:"mysql.connector.django"
 
 @admin.register(NameYerTune)
 class NameYerTuneAdmin(admin.ModelAdmin):
