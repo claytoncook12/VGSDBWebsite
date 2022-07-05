@@ -4,6 +4,7 @@
 # Deployment Requirements 
 Django==3.2.13
 mysql-connector-python
+mysqlclient
 python-decouple
 whitenoise
 gunicorn

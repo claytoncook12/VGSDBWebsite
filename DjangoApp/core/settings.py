@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 if config('DB_SETUP') == 'local':
     DATABASES = {
         'default': {
-            'ENGINE': 'mysql.connector.django',
+            'ENGINE': 'django.db.backends.mysql',
             'NAME': 'db',
             'USER': 'user',
             'PASSWORD': 'password',
@@ -92,7 +92,7 @@ if config('DB_SETUP') == 'local':
 else:
     DATABASES = {
         'default': {
-            'ENGINE': 'mysql.connector.django',
+            'ENGINE': 'django.db.backends.mysql',
             'NAME': 'db',
             'USER': 'user',
             'PASSWORD': 'password',
