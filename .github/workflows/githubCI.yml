@@ -24,6 +24,10 @@ jobs:
         echo "DEBUG = ${{ secrets.DEBUG }}" >> DjangoApp/.env
         echo "ALLOWED_HOSTS = ${{ secrets.ALLOWED_HOSTS }}" >> DjangoApp/.env
         echo "DB_SETUP = deploy" >> DjangoApp/.env
+        echo "PROD_DB_NAME = db" >> DjangoApp/.env
+        echo "PROD_DB_USER = user" >> DjangoApp/.env
+        echo "PROD_DB_PASSWORD = password" >> DjangoApp/.env
+        echo "PROD_DB_HOST = db" >> DjangoApp/.env
     - name:   Install dependencies
       working-directory: ./DjangoApp #Run Tests in DjangApp folder
       run: |
