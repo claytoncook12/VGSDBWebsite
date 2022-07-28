@@ -19,32 +19,35 @@
     <title>Heaton VGS Database</title>
     </head>
     <body>
-    
+
+      <!-- NavBar -->
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="{% url 'home' %}">Heaton VGS Database</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'full_yt_session_list' %}">Online Sessions</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'tunes_all' %}">Tunes</a>
-            </li>
-            <li>
-              <a class="nav-link" href="{% url 'nameyertune_all' %}">#NameYerTune​</a>
-            </li>
-            <li>
-              <a class="nav-link" href="{% url 'about' %}">About</a>
-            </li>
-            {% if request.user.is_superuser %}
-            <li>
-              <a class="nav-link" href="{% url 'admin_links' %}">AdminLinks</a>
-            </li>
-            {% endif %}
-          </ul>
+        <div class="container-fluid">
+          <a class="navbar-brand" href="{% url 'home' %}">Heaton VGS Database</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'full_yt_session_list' %}">Online Sessions</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'tunes_all' %}">Tunes</a>
+              </li>
+              <li>
+                <a class="nav-link" href="{% url 'nameyertune_all' %}">#NameYerTune​</a>
+              </li>
+              <li>
+                <a class="nav-link" href="{% url 'about' %}">About</a>
+              </li>
+              {% if request.user.is_superuser %}
+              <li>
+                <a class="nav-link" href="{% url 'admin_links' %}">AdminLinks</a>
+              </li>
+              {% endif %}
+            </ul>
+          </div>
         </div>
       </nav>
       
