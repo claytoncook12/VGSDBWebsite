@@ -2,9 +2,8 @@
 # cPanel Deployment Useing Python --version 3.9.12
 
 # Deployment Requirements 
-Django==3.2.13
+Django>=4.0.6,<5
 mysql-connector-python
-mysqlclient
 python-decouple
 whitenoise
 gunicorn
