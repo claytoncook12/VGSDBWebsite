@@ -13,7 +13,7 @@
                 </a>
             {% else %}
                 <a  class="page-link" 
-                    href="{% url template_name page_number %}"
+                    href="{% url template_name page_number %}{% if query_string != '' %}?{{ query_string }}{% endif %}"
                 >
                     {{ page_number}}
                 </a>

@@ -1,12 +1,3 @@
-<!-- Testing For Selection Dropdown -->
-<u>Section Not Working For Dropdowns</u><br>
-{% for tune_type_item in tune_type_dropdown %}
-    {{ tune_type_item }}<br>
-    {% if tune_type_item == 'reel' %} Match {% endif %}
-{% endfor %}
-<br>
-<br>
-
 <form method="GET" action="{% url 'tunes_all_temp' 1 %}">
     <div class="mb-3">
         <label for="tune_name" class="form-label">Tune Name</label>
@@ -26,7 +17,7 @@
             </option>
             {% for tune_type_item in tune_type_dropdown %}
                 <option value="{{ tune_type_item }}" 
-                    {% if tune_type_item == tune_type %} selected {% endif %}
+                    {% if tune_type_item.tune_type_char == tune_type %} selected {% endif %}
                 >
                         {{ tune_type_item }}
                 </option>
@@ -38,7 +29,7 @@
         <select class="form-select" id="key" name="key" aria-label="Key Selection">
             <option value="all" {% if key == None %}selected{% endif %} {% if key == 'all' %}selected{% endif %}>All Keys</option>
             {% for key_item in keys %}
-                <option value="{{ key_item }}" {% if key == key_item %}selected{% endif %}>{{ key_item }}</option>
+                <option value="{{ key_item }}" {% if key_item.key_type_char == key %}selected{% endif %}>{{ key_item }}</option>
             {% endfor %}
         </select>
     </div>
