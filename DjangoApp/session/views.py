@@ -109,7 +109,7 @@ def tunes_all_temp(request, page):
             ).order_by('tune__name1'
             ).values('tune__tune_id','tune__name1', 'tune__tune_id__count', 'keys','tune__tune_type__tune_type_char','tune__common_core')
     # Paginate Results
-    obj_per_page = 50
+    obj_per_page = 20
     paginator = Paginator(played_tunes, per_page=obj_per_page)
     page_object = paginator.get_page(page)
     elided_page_ranger = paginator.get_elided_page_range(page, on_each_side=2, on_ends=1)

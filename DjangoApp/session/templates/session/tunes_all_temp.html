@@ -4,7 +4,7 @@
 {% block content %}
 <h1>Tunes_all_temp.html</h1>
 
-<!-- Move Between Pagination Lists -->
+<!-- Move Between Pagination Lists #1 -->
 <div 
     class="pagination-short-nav"
     style="
@@ -32,6 +32,15 @@
     </div>
 </div>
 
+<!-- Information About Current Page -->
+<div 
+    class="text-center"
+    style="margin: 8px;"
+>
+    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+</div>
+
+<!-- Data Table -->
 <div class="table-responsive">
     <table id="myTable" class="table table-bordered table-hover table-sortable" style="text-align: center;">
         <thead class="table-light">
@@ -80,6 +89,35 @@
     </table>
 </div>
 
+<!-- Pagination Page Ranger -->
 {% include "shared/pagination.html" with elided_page_ranger=elided_page_ranger template_name='tunes_all_temp' %}
+
+<!-- Move Between Pagination Lists #2 -->
+<div 
+    class="pagination-short-nav"
+    style="
+        display: flex;
+        justify-content: space-between;
+    "
+>
+    <div>
+        {% if page_obj.has_previous %}
+            <a
+                href="{% url 'tunes_all_temp' page_obj.previous_page_number %}"
+            >
+                <u>Previous</u>
+            </a>
+        {% endif %}
+    </div>
+    <div>
+        {% if page_obj.has_next %}
+            <a
+                href="{% url 'tunes_all_temp' page_obj.next_page_number %}"
+            >
+                <u>Next</u>
+            </a>
+        {% endif %}
+    </div>
+</div>
 
 {% endblock %}
