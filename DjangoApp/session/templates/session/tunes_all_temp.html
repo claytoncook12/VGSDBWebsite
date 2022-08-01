@@ -1,8 +1,24 @@
 {% extends 'session/base.html' %}
 {% load static %}
 
+{% block optional_js_at_bottom %}
+<script type="text/javascript" src="{% static 'session/js/filterBtn.js' %}"></script>
+{% endblock %}
+
 {% block content %}
 <h1>Tunes_all_temp.html</h1>
+
+<!-- Filter Tunes Btn and Form -->
+<button type="button" id="filterBtn" class="btn btn-secondary">Filter Tunes</button>
+<button type="button" id="filterForm" class="btn btn-secondary">Filter Form</button>
+
+<!-- Information About Current Page -->
+<div 
+    class="text-center"
+    style="margin: 8px;"
+>
+    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+</div>
 
 <!-- Move Between Pagination Lists #1 -->
 <div 
@@ -30,14 +46,6 @@
             </a>
         {% endif %}
     </div>
-</div>
-
-<!-- Information About Current Page -->
-<div 
-    class="text-center"
-    style="margin: 8px;"
->
-    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
 </div>
 
 <!-- Data Table -->
