@@ -1,4 +1,5 @@
 <form method="GET" action="{% url 'tunes_all_temp' 1 %}">
+    <u>Tune Filters</u>
     <div class="mb-3">
         <label for="tune_name" class="form-label">Tune Name</label>
         <input type="text" class="form-control" id="tune_name" name="tune_name" 
@@ -7,7 +8,6 @@
         >
     </div>
     <div class="mb-3">
-        <label for="tune_type" class="form-label">Tune Type</label>
         <select class="form-select" id="tune_type" name="tune_type" aria-label="Tune Type Selection">
             <option value="all" 
                 {% if tune_type == None %}selected{% endif %}
@@ -25,7 +25,6 @@
         </select>
     </div>
     <div class="mb-3">
-        <label for="key" class="form-label">Key</label>
         <select class="form-select" id="key" name="key" aria-label="Key Selection">
             <option value="all" {% if key == None %}selected{% endif %} {% if key == 'all' %}selected{% endif %}>All Keys</option>
             {% for key_item in keys %}
@@ -33,6 +32,15 @@
             {% endfor %}
         </select>
     </div>
+    <div class="mb-3 form-check">
+        <input class="form-check-input" type="checkbox" name="common_core_check" value="1" id="common_core_check"
+            {% if common_core_check %} checked {% endif %}
+        >
+        <label class="form-check-label" for="defaultCheck1">
+          Only Common Core (CC) Tunes
+        </label>
+      </div>
+    <!-- Bottom Form Buttons -->
     <button type="submit" class="btn btn-success btn-sm">Apply Filter</button>
     <button type="cancel" class="btn btn-danger btn-sm">
         <a 

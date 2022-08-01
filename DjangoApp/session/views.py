@@ -122,10 +122,12 @@ def tunes_all_temp(request, page):
     tune_name = request.GET.get('tune_name', None)
     tune_type = request.GET.get('tune_type', None)
     key = request.GET.get('key', None)
+    common_core_check = request.GET.get('common_core_check', None)
     # Add GET Values to Context
     context['tune_name'] = tune_name
     context['tune_type'] = tune_type
     context['key'] = key
+    context['common_core_check'] = common_core_check
 
     # Filter played_tunes based on GET form submission
     if tune_name != None:
@@ -136,6 +138,8 @@ def tunes_all_temp(request, page):
     if key != None:
         if key != 'all':
             played_tunes = played_tunes.filter(key__key_type_char=key).values('tune__tune_id','tune__name1', 'tune__tune_id__count', 'keys','tune__tune_type__tune_type_char','tune__common_core')
+    if common_core_check !=None:
+        played_tunes = played_tunes.filter(tune__common_core=True).values('tune__tune_id','tune__name1', 'tune__tune_id__count', 'keys','tune__tune_type__tune_type_char','tune__common_core')
 
     # Tunes Count After Filtering
     tunes_count = len(played_tunes)
