@@ -10,7 +10,7 @@
 
 <!-- Filter Btn Display Hide and Form -->
 <div class="col-md-12 text-center" style="margin: 10px;">
-    <button type="button" id="filterBtn" class="btn btn-secondary" style="display: ; ">
+    <button type="button" id="filterBtn" class="btn btn-secondary btn-sm" style="display: ; ">
         Filter Tunes
     </button>
 </div>
@@ -30,7 +30,7 @@
     Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}, {{ tunes_count }} Tune(s)
 </div>
 
-<!-- Move Between Pagination Lists #1 -->
+<!-- Move Between Pagination Lists -->
 <div 
     class="pagination-short-nav"
     style="
@@ -109,33 +109,5 @@
 
 <!-- Pagination Page Ranger -->
 {% include "shared/pagination.html" with elided_page_ranger=elided_page_ranger template_name='tunes_all_temp' query_string=query_string %}
-
-<!-- Move Between Pagination Lists #2 -->
-<div 
-    class="pagination-short-nav"
-    style="
-        display: flex;
-        justify-content: space-between;
-    "
->
-    <div>
-        {% if page_obj.has_previous %}
-            <a
-                href="{% url 'tunes_all_temp' page_obj.previous_page_number %}{% if query_string != '' %}?{{ query_string }}{% endif %}"
-            >
-                <u>Previous</u>
-            </a>
-        {% endif %}
-    </div>
-    <div>
-        {% if page_obj.has_next %}
-            <a
-                href="{% url 'tunes_all_temp' page_obj.next_page_number %}{% if query_string != '' %}?{{ query_string }}{% endif %}"
-            >
-                <u>Next</u>
-            </a>
-        {% endif %}
-    </div>
-</div>
 
 {% endblock %}

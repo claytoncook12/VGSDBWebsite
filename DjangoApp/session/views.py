@@ -100,9 +100,11 @@ def tunes_all_temp(request, page):
     """
     Temp: Display All Tunes in Database
     """
+    # Set Default Context Parameter
     context = {}
 
-    # Get Query String If Present
+    # Get Query String If Present To Pass On
+    # to Url in template
     context['query_string'] = request.META['QUERY_STRING']
 
     # Get Played Tunes From Database
@@ -125,7 +127,7 @@ def tunes_all_temp(request, page):
     context['tune_type'] = tune_type
     context['key'] = key
 
-    # Filter played_tunes based on form submission
+    # Filter played_tunes based on GET form submission
     if tune_name != None:
         played_tunes = played_tunes.filter(tune__name1__icontains=tune_name).values('tune__tune_id','tune__name1', 'tune__tune_id__count', 'keys','tune__tune_type__tune_type_char','tune__common_core')
     if tune_type != None:
@@ -133,22 +135,20 @@ def tunes_all_temp(request, page):
             played_tunes = played_tunes.filter(tune__tune_type__tune_type_char__icontains=tune_type).values('tune__tune_id','tune__name1', 'tune__tune_id__count', 'keys','tune__tune_type__tune_type_char','tune__common_core')
     if key != None:
         if key != 'all':
-            played_tunes = played_tunes.filter(keys__icontains=key).values('tune__tune_id','tune__name1', 'tune__tune_id__count', 'keys','tune__tune_type__tune_type_char','tune__common_core')
+            played_tunes = played_tunes.filter(key__key_type_char=key).values('tune__tune_id','tune__name1', 'tune__tune_id__count', 'keys','tune__tune_type__tune_type_char','tune__common_core')
 
     # Tunes Count After Filtering
     tunes_count = len(played_tunes)
     context['tunes_count'] = tunes_count
 
     # Paginate Results
-    obj_per_page = 20
+    obj_per_page = 10
     paginator = Paginator(played_tunes, per_page=obj_per_page)
     page_object = paginator.get_page(page)
     elided_page_ranger = paginator.get_elided_page_range(page, on_each_side=2, on_ends=1)
     # Add Pagination Data For View
     context["page_obj"] = page_object
     context["elided_page_ranger"] =  elided_page_ranger
-
-    print(request.META['QUERY_STRING'])
 
     return render(request, 'session/tunes_all_temp.html', context)
 

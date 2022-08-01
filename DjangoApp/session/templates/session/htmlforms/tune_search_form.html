@@ -33,8 +33,8 @@
             {% endfor %}
         </select>
     </div>
-    <button type="submit" class="btn btn-success">Apply Filter</button>
-    <button type="cancel" class="btn btn-danger">
+    <button type="submit" class="btn btn-success btn-sm">Apply Filter</button>
+    <button type="cancel" class="btn btn-danger btn-sm">
         <a 
             href="{% url 'tunes_all_temp' 1 %}"
             class="text-reset text-decoration-none"
@@ -42,5 +42,5 @@
             Cancel All Filters
         </a>
     </button>
-    <button type="button" class="btn btn-secondary" id="hideFilterBtn">Hide Filters</button>
+    <button type="button" class="btn btn-secondary btn-sm" id="hideFilterBtn">Hide Filters</button>
 </form>
