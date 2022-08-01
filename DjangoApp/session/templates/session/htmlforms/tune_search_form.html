@@ -1,0 +1,55 @@
+<!-- Testing For Selection Dropdown -->
+<u>Section Not Working For Dropdowns</u><br>
+{% for tune_type_item in tune_type_dropdown %}
+    {{ tune_type_item }}<br>
+    {% if tune_type_item == 'reel' %} Match {% endif %}
+{% endfor %}
+<br>
+<br>
+
+<form method="GET" action="{% url 'tunes_all_temp' 1 %}">
+    <div class="mb-3">
+        <label for="tune_name" class="form-label">Tune Name</label>
+        <input type="text" class="form-control" id="tune_name" name="tune_name" 
+            {% if tune_name == None %} placeholder="&#x1F50D Tune Name"
+            {% else %} value="{{ tune_name }}" {% endif %}
+        >
+    </div>
+    <div class="mb-3">
+        <label for="tune_type" class="form-label">Tune Type</label>
+        <select class="form-select" id="tune_type" name="tune_type" aria-label="Tune Type Selection">
+            <option value="all" 
+                {% if tune_type == None %}selected{% endif %}
+                {% if tune_type == 'all' %}selected{% endif %}
+            >
+                All Tune Types
+            </option>
+            {% for tune_type_item in tune_type_dropdown %}
+                <option value="{{ tune_type_item }}" 
+                    {% if tune_type_item == tune_type %} selected {% endif %}
+                >
+                        {{ tune_type_item }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="key" class="form-label">Key</label>
+        <select class="form-select" id="key" name="key" aria-label="Key Selection">
+            <option value="all" {% if key == None %}selected{% endif %} {% if key == 'all' %}selected{% endif %}>All Keys</option>
+            {% for key_item in keys %}
+                <option value="{{ key_item }}" {% if key == key_item %}selected{% endif %}>{{ key_item }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-success">Apply Filter</button>
+    <button type="cancel" class="btn btn-danger">
+        <a 
+            href="{% url 'tunes_all_temp' 1 %}"
+            class="text-reset text-decoration-none"
+        >
+            Cancel All Filters
+        </a>
+    </button>
+    <button type="button" class="btn btn-secondary" id="hideFilterBtn">Hide Filters</button>
+</form>

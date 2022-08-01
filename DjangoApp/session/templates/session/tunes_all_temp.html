@@ -8,17 +8,28 @@
 {% block content %}
 <h1>Tunes_all_temp.html</h1>
 
-<!-- Filter Tunes Btn and Form -->
-<button type="button" id="filterBtn" class="btn btn-secondary">Filter Tunes</button>
-<button type="button" id="filterForm" class="btn btn-secondary">Filter Form</button>
-
 <!-- Information About Current Page -->
 <div 
-    class="text-center"
     style="margin: 8px;"
 >
+    Total Tune Count: {{ tunes_count }} <br>
     Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
 </div>
+
+<!-- Filter Btn Display Hide and Form -->
+<div class="col-md-12 text-center" style="margin: 10px;">
+    <button type="button" id="filterBtn" class="btn btn-secondary" style="display: ; ">
+        Filter Tunes
+    </button>
+</div>
+
+    <!-- Form For Filtering Tunes -->
+    <div 
+        id="filterForm" 
+        style="display: none; margin: 10px;"
+    >
+        {% include "session/htmlforms/tune_search_form.html" with tune_type_dropdown=tune_type_dropdown keys=keys tune_name=tune_name tune_type=tune_type key=key%}
+    </div>
 
 <!-- Move Between Pagination Lists #1 -->
 <div 
@@ -31,7 +42,7 @@
     <div>
         {% if page_obj.has_previous %}
             <a
-                href="{% url 'tunes_all_temp' page_obj.previous_page_number %}"
+                href="{% url 'tunes_all_temp' page_obj.previous_page_number %}{% if query_string != '' %}?{{ query_string }}{% endif %}"
             >
                 <u>Previous</u>
             </a>
@@ -40,7 +51,7 @@
     <div>
         {% if page_obj.has_next %}
             <a
-                href="{% url 'tunes_all_temp' page_obj.next_page_number %}"
+                href="{% url 'tunes_all_temp' page_obj.next_page_number %}{% if query_string != '' %}?{{ query_string }}{% endif %}"
             >
                 <u>Next</u>
             </a>
@@ -111,7 +122,7 @@
     <div>
         {% if page_obj.has_previous %}
             <a
-                href="{% url 'tunes_all_temp' page_obj.previous_page_number %}"
+                href="{% url 'tunes_all_temp' page_obj.previous_page_number %}{% if query_string != '' %}?{{ query_string }}{% endif %}"
             >
                 <u>Previous</u>
             </a>
@@ -120,7 +131,7 @@
     <div>
         {% if page_obj.has_next %}
             <a
-                href="{% url 'tunes_all_temp' page_obj.next_page_number %}"
+                href="{% url 'tunes_all_temp' page_obj.next_page_number %}{% if query_string != '' %}?{{ query_string }}{% endif %}"
             >
                 <u>Next</u>
             </a>
