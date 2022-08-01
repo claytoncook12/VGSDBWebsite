@@ -6,6 +6,7 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import user_passes_test
 from django.http import HttpResponse
 from django.core.management import call_command
+from django.core.paginator import Paginator
 from django.conf import settings
 from .models import Session, PlayedTuneGroup, Tune, PlayedTune, NameYerTune, TuneOfTheMonth
 from django.db.models import Count, Aggregate, CharField
@@ -96,6 +97,30 @@ def tunes_all(request):
 
     return render(request, 'session/tunes_all.html', {'played_tunes': played_tunes})
 
+def tunes_all_temp(request, page):
+    """
+    Temp: Display All Tunes in Database
+    """
+
+    # Get Played Tunes From Database
+    played_tunes = PlayedTune.objects.values('tune__tune_id'
+            ).annotate(Count('tune__tune_id')
+            ).annotate(keys=Concat('key__key_type_char', distinct=True)
+            ).order_by('tune__name1'
+            ).values('tune__tune_id','tune__name1', 'tune__tune_id__count', 'keys','tune__tune_type__tune_type_char','tune__common_core')
+    # Paginate Results
+    obj_per_page = 50
+    paginator = Paginator(played_tunes, per_page=obj_per_page)
+    page_object = paginator.get_page(page)
+    elided_page_ranger = paginator.get_elided_page_range(page, on_each_side=2, on_ends=1)
+
+    # Set Context For View
+    context = {
+        "page_obj": page_object,
+        "elided_page_ranger": elided_page_ranger,
+    }
+
+    return render(request, 'session/tunes_all_temp.html', context)
 
 def tune_detail(request, tune_id):
     """
@@ -172,3 +197,5 @@ def session_json(request):
     response['Content-Disposition'] = f'attachment; filename={json_file_name}'
 
     return response
+
+

@@ -1,0 +1,24 @@
+<!-- Pagination Links -->
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        {% for page_number in elided_page_ranger %}
+        <li 
+            class="page-item 
+                {% if page_number == page_obj.number %} active {% endif %}
+                {% if page_number == page.obj.paginator.ELLIPSIS %} dsiabled {% endif %}
+            ">
+            {% if page_number == page_obj.paginator.ELLIPSIS %}
+                <a class="page-link">
+                    {{ page_number }}
+                </a>
+            {% else %}
+                <a  class="page-link" 
+                    href="{% url template_name page_number %}"
+                >
+                    {{ page_number}}
+                </a>
+            {% endif %}
+        </li>
+        {% endfor %}    
+    </ul>
+</nav>
