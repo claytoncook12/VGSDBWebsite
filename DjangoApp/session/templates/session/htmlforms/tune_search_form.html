@@ -1,7 +1,6 @@
 <form method="GET" action="{% url 'tunes_all_temp' 1 %}">
     <u>Tune Filters</u>
     <div class="mb-3">
-        <label for="tune_name" class="form-label">Tune Name</label>
         <input type="text" class="form-control" id="tune_name" name="tune_name" 
             {% if tune_name == None %} placeholder="&#x1F50D Tune Name"
             {% else %} value="{{ tune_name }}" {% endif %}
@@ -32,7 +31,7 @@
             {% endfor %}
         </select>
     </div>
-    <div class="mb-3 form-check">
+    <div class="mb-3 form-check" style="margin-left: 5px;">
         <input class="form-check-input" type="checkbox" name="common_core_check" value="1" id="common_core_check"
             {% if common_core_check %} checked {% endif %}
         >

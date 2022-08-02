@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-<h1>Tunes_all_temp.html</h1>
+<h1>Played Tunes</h1>
 
 <!-- Filter Btn Display Hide and Form -->
 <div class="col-md-12" style="margin: 10px;">
@@ -58,56 +58,69 @@
     </div>
 </div>
 
-<!-- Data Table -->
-<div class="table-responsive">
-    <table id="myTable" class="table table-bordered table-hover table-sortable" style="text-align: center;">
-        <thead class="table-light">
-            <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Type</th>
-                <th scope="col">CC</th>
-                <th scope="col">Key(s)</th>
-                <th scope="col">Times Played</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for tune in page_obj %}
-            <tr>
-                <td class=''>
-                    <a href="{% url 'tune_detail' tune.tune__tune_id %}">
-                    {{ tune.tune__name1|title }}
-                    {% if tune.tune__name2 %}
-                        <br> aka. {{ tune.tune__name2|title }}
-                    {% endif %}
-                    {% if tune.tune__name3 %}
-                        , {{ tune.tune__name3|title }},
-                    {% endif %}
-                    {% if tune.tune__name3 %}
-                        {{ tune.tune__name3|title }}
-                    {% endif %} 
-                    </a>
-                </td>
-                <td class=''>
-                    {{ tune.tune__tune_type__tune_type_char }}
-                </td>
-                <td class=''>
-                    {% if tune.tune__common_core %}
-                        <span>&#10003;</span>
-                    {% endif %}
-                </td>
-                <td class=''>
-                    {{ tune.keys }}
-                </td>
-                <td class=''>
-                {{ tune.tune__tune_id__count }}
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
+{% if tune_count != 0 %}
+    <!-- Data Table -->
+    <div class="table-responsive">
+        <table id="myTable" class="table table-bordered table-hover table-sortable" style="text-align: center;">
+            <thead class="table-light">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">CC</th>
+                    <th scope="col">Key(s)</th>
+                    <th scope="col">Times Played</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tune in page_obj %}
+                <tr>
+                    <td class=''>
+                        <a href="{% url 'tune_detail' tune.tune__tune_id %}">
+                        {{ tune.tune__name1|title }}
+                        {% if tune.tune__name2 %}
+                            <br> aka. {{ tune.tune__name2|title }}
+                        {% endif %}
+                        {% if tune.tune__name3 %}
+                            , {{ tune.tune__name3|title }},
+                        {% endif %}
+                        {% if tune.tune__name3 %}
+                            {{ tune.tune__name3|title }}
+                        {% endif %} 
+                        </a>
+                    </td>
+                    <td class=''>
+                        {{ tune.tune__tune_type__tune_type_char }}
+                    </td>
+                    <td class=''>
+                        {% if tune.tune__common_core %}
+                            <span>&#10003;</span>
+                        {% endif %}
+                    </td>
+                    <td class=''>
+                        {{ tune.keys }}
+                    </td>
+                    <td class=''>
+                    {{ tune.tune__tune_id__count }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endif %}
 
-<!-- Pagination Page Ranger -->
-{% include "shared/pagination.html" with elided_page_ranger=elided_page_ranger template_name='tunes_all_temp' query_string=query_string %}
+<!-- If No Results for Search -->
+{% if tunes_count == 0 %}
+    <p
+        style="text-align: center;"
+    >
+        No tunes match your search.
+    </p>
+{% endif %}
+
+{% if tunes_count != 0 %}
+    <!-- Pagination Page Ranger -->
+    {% include "shared/pagination.html" with elided_page_ranger=elided_page_ranger template_name='tunes_all_temp' query_string=query_string %}
+{% endif %}
 
 {% endblock %}

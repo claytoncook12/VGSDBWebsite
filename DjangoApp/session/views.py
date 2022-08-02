@@ -120,6 +120,8 @@ def tunes_all_temp(request, page):
 
     # If Values In Get Request
     tune_name = request.GET.get('tune_name', None)
+    if tune_name == '':
+        tune_name = None
     tune_type = request.GET.get('tune_type', None)
     key = request.GET.get('key', None)
     common_core_check = request.GET.get('common_core_check', None)
