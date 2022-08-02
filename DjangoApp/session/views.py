@@ -2,7 +2,7 @@ import sys
 import os
 from datetime import datetime
 from pathlib import Path
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import user_passes_test
 from django.http import HttpResponse
 from django.core.management import call_command
@@ -10,6 +10,7 @@ from django.core.paginator import Paginator
 from django.conf import settings
 from .models import Key, Session, PlayedTuneGroup, Tune, PlayedTune, NameYerTune, TuneOfTheMonth, TuneType
 from django.db.models import Count, Aggregate, CharField
+from .forms import SessionForm
 
 # Code for Custom ORM Method
 class Concat(Aggregate):
@@ -83,6 +84,16 @@ def session_detail(request, session_id):
                                                            'tune_groups_buttons': r,
                                                            'tune_groups': tune_groups,
                                                            'session_date': session_date})
+
+def session_add(request):
+    if request.method == 'POST':
+        form = SessionForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(full_yt_session_list)
+    else:
+        form = SessionForm()
+    return render(request, 'session/session_add.html', {'form':form})
 
 def tunes_all(request, page):
     """
