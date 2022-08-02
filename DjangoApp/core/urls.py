@@ -21,7 +21,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
     path('about/', views.about, name='about'),
-    path('tune/all/', views.tunes_all, name="tunes_all"),
+    path('tune/all/<int:page>/', views.tunes_all, name="tunes_all"),
     path('tune/<int:tune_id>/', views.tune_detail, name='tune_detail'),
     path('session/all/', views.full_yt_session_list, name='full_yt_session_list'),
     path('session/<int:session_id>/', views.session_detail, name='session_detail'),
@@ -29,7 +29,4 @@ urlpatterns = [
     path('youtube_loop_test2/', views.youtube_loop_test2, name='youtube_loop_test2'),
     path('adminlinks/', views.admin_links, name='admin_links'),
     path('adminlinks/sessionjson/', views.session_json, name="session_json"),
-
-    # Temp Path For Testing
-    path('tune/all/temp/<int:page>/', views.tunes_all_temp, name="tunes_all_temp")
 ]

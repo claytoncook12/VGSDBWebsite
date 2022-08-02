@@ -84,19 +84,7 @@ def session_detail(request, session_id):
                                                            'tune_groups': tune_groups,
                                                            'session_date': session_date})
 
-def tunes_all(request):
-    """
-    Display all Tunes in Database
-    """
-    played_tunes = PlayedTune.objects.values('tune__tune_id'
-                ).annotate(Count('tune__tune_id')
-                ).annotate(keys=Concat('key__key_type_char', distinct=True)
-                ).order_by('tune__name1'
-                ).values('tune__tune_id','tune__name1', 'tune__tune_id__count', 'keys','tune__tune_type__tune_type_char','tune__common_core')
-
-    return render(request, 'session/tunes_all.html', {'played_tunes': played_tunes})
-
-def tunes_all_temp(request, page):
+def tunes_all(request, page):
     """
     Temp: Display All Tunes in Database
     """
@@ -156,7 +144,7 @@ def tunes_all_temp(request, page):
     context["page_obj"] = page_object
     context["elided_page_ranger"] =  elided_page_ranger
 
-    return render(request, 'session/tunes_all_temp.html', context)
+    return render(request, 'session/tunes_all.html', context)
 
 def tune_detail(request, tune_id):
     """

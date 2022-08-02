@@ -1,24 +1,65 @@
 {% extends 'session/base.html' %}
 {% load static %}
 
+{% block optional_js_at_bottom %}
+<script type="text/javascript" src="{% static 'session/js/filterBtn.js' %}"></script>
+{% endblock %}
+
 {% block content %}
-<script src="{% static 'session/js/search.js' %}"></script>
-<link rel="stylesheet" href="{% static 'session/css/tablesort.css' %}">
+<h1>Played Tunes</h1>
 
-    <h1><u>Played Tunes</u></h1>
-    <br>
+<!-- Filter Btn Display Hide and Form -->
+<div class="col-md-12" style="margin: 10px;">
+    <button type="button" id="filterBtn" class="btn btn-secondary" style="display: ; ">
+        Filter Tunes
+    </button>
+</div>
 
-    <form>
-        <h3 style="text-align: left">Search Tunes</h3>
-        <div class="form-group row" style="padding: 15px">
-          <input type="text" class="form-control col-md-4" id="tuneName" onkeyup="searchTuneType()" placeholder="&#x1F50D Tune">
-          <input type="text" class="form-control col-md-4" id="typeName" onkeyup="searchTuneType()" placeholder="&#x1F50D Type">
-          <input type="text" class="form-control col-md-4" id="keyName" onkeyup="searchTuneType()" placeholder="&#x1F50D Key">
-        </div>
-    </form>
-    <small>* Click on Table Headers to Sort</small><br>
-    <small>* CC is the Common Core Tunes</small>
+    <!-- Form For Filtering Tunes -->
+    <div 
+        id="filterForm" 
+        style="display: none; margin: 10px;"
+    >
+        {% include "session/htmlforms/tune_search_form.html" with tune_type_dropdown=tune_type_dropdown keys=keys tune_name=tune_name tune_type=tune_type key=key%}
+    </div>
 
+<!-- Information About Current Page -->
+<div 
+    style="margin: 8px;"
+>
+    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}, {{ tunes_count }} Tune(s)
+</div>
+
+<!-- Move Between Pagination Lists -->
+<div 
+    class="pagination-short-nav"
+    style="
+        display: flex;
+        justify-content: space-between;
+    "
+>
+    <div>
+        {% if page_obj.has_previous %}
+            <a
+                href="{% url 'tunes_all' page_obj.previous_page_number %}{% if query_string != '' %}?{{ query_string }}{% endif %}"
+            >
+                <u>Previous</u>
+            </a>
+        {% endif %}
+    </div>
+    <div>
+        {% if page_obj.has_next %}
+            <a
+                href="{% url 'tunes_all' page_obj.next_page_number %}{% if query_string != '' %}?{{ query_string }}{% endif %}"
+            >
+                <u>Next</u>
+            </a>
+        {% endif %}
+    </div>
+</div>
+
+{% if tune_count != 0 %}
+    <!-- Data Table -->
     <div class="table-responsive">
         <table id="myTable" class="table table-bordered table-hover table-sortable" style="text-align: center;">
             <thead class="table-light">
@@ -27,11 +68,11 @@
                     <th scope="col">Type</th>
                     <th scope="col">CC</th>
                     <th scope="col">Key(s)</th>
-                    <th scope="col" class='th-sort-numeric'>Times Played</th>
+                    <th scope="col">Times Played</th>
                 </tr>
             </thead>
             <tbody>
-                {% for tune in played_tunes %}
+                {% for tune in page_obj %}
                 <tr>
                     <td class=''>
                         <a href="{% url 'tune_detail' tune.tune__tune_id %}">
@@ -66,6 +107,20 @@
             </tbody>
         </table>
     </div>
+{% endif %}
 
-<script type="text/javascript" src="{% static 'session/js/tablesort.js' %}"></script>
+<!-- If No Results for Search -->
+{% if tunes_count == 0 %}
+    <p
+        style="text-align: center;"
+    >
+        No tunes match your search.
+    </p>
+{% endif %}
+
+{% if tunes_count != 0 %}
+    <!-- Pagination Page Ranger -->
+    {% include "shared/pagination.html" with elided_page_ranger=elided_page_ranger template_name='tunes_all' query_string=query_string %}
+{% endif %}
+
 {% endblock %}

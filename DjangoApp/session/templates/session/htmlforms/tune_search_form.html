@@ -1,4 +1,4 @@
-<form method="GET" action="{% url 'tunes_all_temp' 1 %}">
+<form method="GET" action="{% url 'tunes_all' 1 %}">
     <u>Tune Filters</u>
     <div class="mb-3">
         <input type="text" class="form-control" id="tune_name" name="tune_name" 
@@ -43,7 +43,7 @@
     <button type="submit" class="btn btn-success btn-sm">Apply Filter</button>
     <button type="cancel" class="btn btn-danger btn-sm">
         <a 
-            href="{% url 'tunes_all_temp' 1 %}"
+            href="{% url 'tunes_all' 1 %}"
             class="text-reset text-decoration-none"
         >
             Cancel All Filters
