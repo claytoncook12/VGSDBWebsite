@@ -26,6 +26,7 @@ urlpatterns = [
     path('session/all/', views.full_yt_session_list, name='full_yt_session_list'),
     path('session/<int:session_id>/', views.session_detail, name='session_detail'),
     path('session/add/', views.session_add, name='session_add'),
+    path('session/<int:session_id>/edit', views.session_edit, name='session_edit'),
     path('nameyertune/all/', views.nameyertune_all, name='nameyertune_all'),
     path('youtube_loop_test2/', views.youtube_loop_test2, name='youtube_loop_test2'),
     path('adminlinks/', views.admin_links, name='admin_links'),

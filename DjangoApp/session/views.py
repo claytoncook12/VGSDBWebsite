@@ -80,7 +80,8 @@ def session_detail(request, session_id):
     for group in r:
         tune_groups.append({'group': group, 'played_tunes': PlayedTune.objects.filter(played_tune_group=group).order_by('group_order_num')})
 
-    return render(request, 'session/session_detail.html', {'session_id_detail': session_id_detail,
+    return render(request, 'session/session_detail.html', { 'session_id': session_id,
+                                                           'session_id_detail': session_id_detail,
                                                            'videoId': videoId,
                                                            'tune_groups_buttons': r,
                                                            'tune_groups': tune_groups,
@@ -105,6 +106,24 @@ def session_add(request):
     else:
         form = SessionForm(initial=initial_data)
     return render(request, 'session/session_add.html', {'form':form})
+
+@user_passes_test(lambda u: u.is_superuser)
+def session_edit(request, session_id):
+    """
+    Edit Session Information
+    """
+    
+    if request.method == 'POST':
+        form = SessionForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(session_detail, session_id=session_id)
+    else:
+        # Get Object and Set Form
+        session = Session.objects.get(session_id=session_id)
+        form = SessionForm(instance=session)
+    
+    return render(request, 'session/session_edit.html', {'form': form, 'session_id': session_id}) 
 
 def tunes_all(request, page):
     """

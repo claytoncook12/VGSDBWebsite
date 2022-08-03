@@ -59,6 +59,25 @@
     {% endfor %}
 </div>
 
+<!-- HTML Form Editing Session Information -->
+{% if request.user.is_superuser %}
+<div>
+  Edit:<br>
+  <div>
+    <a href="{% url 'session_edit' session_id %}">
+        <button 
+            type="button" 
+            class="btn btn-secondary btn-sm"
+            style="margin: 10px;"
+        >
+            Edit Session Info
+        </button>
+    </a>
+  </div>
+</div>
+{% endif %}
+
+<!-- Played Tunes For Session -->
 <br>
 <h3>Tunes Played</h3>
 {% for group in tune_groups %}

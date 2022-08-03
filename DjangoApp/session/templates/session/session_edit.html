@@ -29,7 +29,7 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Add New Session</h1>
+    <h1>Edit Session</h1>
     <form action="" method="post">
         {% csrf_token %}
         {% for field in form %}
@@ -48,6 +48,7 @@
                     {% endfor %}
                 </div>
         {% endfor %}
-        <input type="submit" class="btn btn-success btn-sm" value="Submit">
+        <input type="submit" class="btn btn-success btn-sm" value="Save">
+        <a href="{% url 'session_detail' session_id %}" class="btn btn-danger btn-sm" role="button">Cancel</a>
     </form>
 {% endblock %}
