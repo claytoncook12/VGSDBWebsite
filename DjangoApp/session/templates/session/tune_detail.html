@@ -41,7 +41,7 @@
 
 {% if name_yer_tune_detail %}
     <h3>#NameYerTune Teaching Video</h3>
-    <div class="embed-responsive embed-responsive-16by9">
+    <div class="ratio ratio-16x9">
         <iframe class="embed-responsive-item" src="{{ name_yer_tune_detail.youtube_teaching_url }}" allowfullscreen></iframe>
     </div>
     {% if name_yer_tune_detail.session.date != None %}
@@ -56,7 +56,7 @@
 
 {% if tune_of_the_month_detail %}
     <h3>Tune of The Month Teaching Video</h3>
-    <div class="embed-responsive embed-responsive-16by9">
+    <div class="ratio ratio-16x9">
         <iframe class="embed-responsive-item" src="{{ tune_of_the_month_detail.youtube_teaching_url }}" allowfullscreen></iframe>
     </div>
     <br>
