@@ -2,6 +2,20 @@
 
 {% block content %}
     <h1>Previous Youtube Sessions</h1>
+
+    {% if request.user.is_superuser %}
+    <div>
+        <a href="{% url 'session_add' %}">
+            <button 
+                type="button" 
+                class="btn btn-secondary btn-sm"
+                style="margin: 10px;"
+            >
+                Add New Session
+            </button>
+        </a>
+    </div>
+    {% endif %}
     
     <table id="myTable" class="table table-bordered" style="text-align: center;">
         <tr class="header d-flex">

@@ -10,6 +10,7 @@ from django.core.paginator import Paginator
 from django.conf import settings
 from .models import Key, Session, PlayedTuneGroup, Tune, PlayedTune, NameYerTune, TuneOfTheMonth, TuneType
 from django.db.models import Count, Aggregate, CharField
+import datetime
 from .forms import SessionForm
 
 # Code for Custom ORM Method
@@ -85,14 +86,24 @@ def session_detail(request, session_id):
                                                            'tune_groups': tune_groups,
                                                            'session_date': session_date})
 
+@user_passes_test(lambda u: u.is_superuser)
 def session_add(request):
+    """
+    Add New Session to Database
+    """
+
+    initial_data = {
+        'date': datetime.date.today(),
+        'youtube_url': 'https://www.youtube.com/embed/'
+    }
+    
     if request.method == 'POST':
         form = SessionForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect(full_yt_session_list)
     else:
-        form = SessionForm()
+        form = SessionForm(initial=initial_data)
     return render(request, 'session/session_add.html', {'form':form})
 
 def tunes_all(request, page):
