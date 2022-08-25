@@ -1,0 +1,35 @@
+<hr>
+<div style="text-decoration: underline;">
+Add Tune Set
+</div>
+<form method="POST" action="">
+    <!-- Hidden Session Information -->
+    <input type="hidden" id="session-id" value="{{ session_id }}">
+    <!-- Displayed Tune Group Information -->
+    <div class="form-group" style="margin: 10px;">
+        <label for="tune-group-number">Set Number:</label>
+        <input type="number" class="form-control" id="tune-group-number" min="1"/>
+    </div>
+    <div class="form-group" style="margin: 10px;">
+        <label for="start-time">Start Time of Tune Set:</label>
+        <input type="text" class="form-control" id="start-time" value="00:00:00" />
+    </div>
+    <div class="form-group" style="margin: 10px;">
+        <label for="end-time">End Time of Tune Set:</label>
+        <input type="text" class="form-control" id="end-time" value="00:00:00" />
+    </div>
+    <div style="margin: 10px;">
+        <div class="checkbox">
+            <label>Is Offertory Set: <input type="checkbox" id="offertory"></label>
+        </div>
+        <div class="checkbox">
+            <label>Is Teaching Set: <input type="checkbox" id="teaching"></label>
+        </div>
+    </div>
+    <!-- Button For Submitting -->
+    <div style="margin: 10px;">
+        <button type="submit" class="btn btn-success btn-sm">Submit Group</button>
+        <button type="button" class="btn btn-secondary btn-sm" id="hidePlayedTuneGroupAddFormBtn">Hide Add Tune Set Form</button>
+    </div>
+</form>
+<hr>

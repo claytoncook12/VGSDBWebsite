@@ -1,6 +1,10 @@
 {% extends 'session/base.html' %}
 {% load static %}
 
+{% block optional_js_at_bottom %}
+<script type="text/javascript" src="{% static 'session/js/playedTuneGroupBtn.js' %}"></script>
+{% endblock %}
+
 {% block content %}
 <!-- Custom CSS -->
 <link rel="stylesheet" href="{% static 'session/css/session_detail.css' %}">
@@ -76,6 +80,21 @@
   </div>
 </div>
 {% endif %}
+
+<!-- HTML Form For Adding Played Tune Group -->
+
+<div class="col-md-12" style="margin: 10px;">
+  <button type="button" id="playedTuneGroupAddFormBtn" class="btn btn-secondary btn-sm" style="display: ;">
+      Add Played Set
+  </button>
+</div>
+
+<div 
+    id="playedTuneGroupAddForm" 
+    style="display: none; margin: 10px;"
+>
+    {% include "session/htmlforms/session_add_tune_set_form.html" %}
+</div>
 
 <!-- Played Tunes For Session -->
 <br>
