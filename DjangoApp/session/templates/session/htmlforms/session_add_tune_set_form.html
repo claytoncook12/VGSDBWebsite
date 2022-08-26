@@ -10,28 +10,28 @@ Add Tune Set
     <input type="hidden" id="session-id" value="{{ session_id }}">
     <!-- Displayed Tune Group Information -->
     <div class="mb-3 row">
-        <div class="col-6">
+        <div class="col-md-6 col-sm-12">
             <label for="tune-group-number">Set Number:</label>
             <input type="number" class="form-control" id="tune-group-number" min="1"/>
         </div>
     </div>
     <div class="mb-3 row">
-        <div class="col-6">
+        <div class="col-md-6 col-sm-12">
             <label for="start-time">Start Time of Tune Set:</label>
             <input type="text" class="form-control mb-1" id="start-time" value="00:00:00" />
-            <button type="button" class="btn btn-secondary btn-sm" id="startTimeYoutubeVideoAddBtn">Add Current Video Time</button>
+            <button type="button" class="mb-1 btn btn-secondary btn-sm" id="startTimeYoutubeVideoAddBtn">Add Current Video Time</button>
         </div>
-        <div class="col-6">
+        <div class="col-md-6 col-sm-12">
             <label for="end-time">End Time of Tune Set:</label>
             <input type="text" class="form-control mb-1" id="end-time" value="00:00:00" />
-            <button type="button" class="btn btn-secondary btn-sm" id="endTimeYoutubeVideoAddBtn">Add Current Video Time</button>
+            <button type="button" class="mb-1 btn btn-secondary btn-sm" id="endTimeYoutubeVideoAddBtn">Add Current Video Time</button>
         </div>
     </div>
     <div class="mb-3 row">
-        <div class="col-3 checkbox">
+        <div class="checkbox col-md-3 col-sm-6">
             <label>Is Offertory Set: <input type="checkbox" id="offertory"></label>
         </div>
-        <div class="col-3 checkbox">
+        <div class="checkbox col-md-3 col-sm-6">
             <label>Is Teaching Set: <input type="checkbox" id="teaching"></label>
         </div>
     </div>
