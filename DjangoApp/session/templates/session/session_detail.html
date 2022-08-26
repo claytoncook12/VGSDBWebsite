@@ -63,10 +63,10 @@
     {% endfor %}
 </div>
 
-<!--  -->
+<!-- Edit Data and Forms For SuperUsers -->
 {% if request.user.is_superuser %}
 <div>
-  Edit:<br>
+  Edit: <br>
   <!-- HTML Form Editing Session Information -->
     <div>
       <a href="{% url 'session_edit' session_id %}">
