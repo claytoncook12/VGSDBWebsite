@@ -67,7 +67,11 @@ def session_detail(request, session_id):
     Display of Youtube Session Details
     """
 
-    # Get Session If Avaliable
+    # TODO Look at How to Submitting Post Data
+    # if request.method == 'POST':
+    #     breakpoint()
+
+    # Get Session If Available
     session_id_detail = get_object_or_404(Session, session_id=session_id)
     session_date = session_id_detail.date
 
@@ -124,6 +128,17 @@ def session_edit(request, session_id):
         form = SessionForm(instance=session)
     
     return render(request, 'session/session_edit.html', {'form': form, 'session_id': session_id}) 
+
+@user_passes_test(lambda u: u.is_superuser)
+def session_add_played_group(request):
+    """
+    Add Played Group to Session
+    """
+
+    if request.method == 'POST':
+        breakpoint()
+    
+    return redirect(full_yt_session_list)
 
 def tunes_all(request, page):
     """
