@@ -96,21 +96,25 @@
 {% endif %}
 
 <!-- Played Tunes For Session -->
-<br>
 <h3>Tunes Played</h3>
-{% for group in tune_groups %}
-    <h5>
-        Set {{ group.group.session_order_num }}
-        {% if  group.group.offertory %} (Offertory) {% endif %}
-        {% if group.group.teaching %} (Teaching) {% endif %}
-        :
-    </h5> 
-    <p>
-        &emsp;({{ group.group.start_time }} to {{ group.group.end_time }})
-    </p>
-    <ol>
-    {% for tune in group.played_tunes %}
-        <li>
+  <div class="row justify-content-md-center" style="margin: 0 10px 0 10px;">
+    {% for group in tune_groups %}
+    <div class="card mb-3 col-lg-8 col-md-12">
+      <div class="card-header" style="background-color: #fff;">
+        <div class="d-flex">
+          <h4 style="text-align: left;">
+            Set {{ group.group.session_order_num }}
+            </h4>
+            <span class="ms-auto">
+              {{ group.group.start_time }} to {{ group.group.end_time }}
+            </span>
+        </div>
+          {% if  group.group.offertory %} Offertory {% endif %}
+          {% if group.group.teaching %} Teaching {% endif %}
+      </div>
+      <ul class="list-group list-group-flush">
+        {% for tune in group.played_tunes %}
+        <li class="list-group-item">
             <a href="{% url 'tune_detail' tune.tune.pk %}">
                 {{ tune.tune.name1|title }} 
                 {% if tune.tune.name2 %}
@@ -119,12 +123,23 @@
                 ({{ tune.key|title }}) ({{ tune.tune.tune_type.tune_type_char|title }})
             </a>
             {% if  tune.add_info != '' or tune.tune.tune_info != '' %}
+            <br>
             Notes:{% if tune.add_info != '' %} {{ tune.add_info }}{% if tune.tune.tune_info != '' %},{% endif %}{% endif %} {{ tune.tune.tune_info }}
             {% endif %}
         </li>
+        {% endfor %}
+      </ul>
+      <div class="card-body">
+        <button type="button"  id="cardSet{{ group.group.session_order_num }}"
+          onclick="startSpecificTime({{group.group.start_time.seconds}})" 
+          class="mb-1 btn btn-outline-dark btn-sm">
+            Play Set
+        </button>
+      </div>
+    </div>
     {% endfor %}
-    </ol>
-{% endfor %}
+  </div>
+
 </div>
 
 {% endblock %}
