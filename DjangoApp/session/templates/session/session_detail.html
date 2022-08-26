@@ -9,12 +9,11 @@
 {% block content %}
 <!-- Custom CSS -->
 <link rel="stylesheet" href="{% static 'session/css/session_detail.css' %}">
-
-<h1>{{ session_id_detail.name|title }}</h1>
-<h2>{{ session_date|date:"F d, Y" }}</h2>
+<div class="mb-3"></div>
 <div class="ratio ratio-16x9">
     <div class="embed-responsive-item" id="player"></div>
 </div>
+{{ session_date|date:"F d, Y" }}: {{ session_id_detail.name|title }}
 
     <script>
       // 2. This code loads the IFrame Player API code asynchronously.
