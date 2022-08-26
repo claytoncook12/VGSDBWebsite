@@ -5,6 +5,7 @@ Add Tune Set
 </div>
 
 <form method="POST" action="" class="container">
+    {% csrf_token %}
     <!-- Hidden Session Information -->
     <input type="hidden" id="session-id" value="{{ session_id }}">
     <!-- Displayed Tune Group Information -->
@@ -40,4 +41,5 @@ Add Tune Set
         <button type="button" class="btn btn-secondary btn-sm" id="hidePlayedTuneGroupAddFormBtn">Hide Add Tune Set Form</button>
     </div>
 </form>
+
 <hr>
