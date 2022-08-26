@@ -63,38 +63,36 @@
     {% endfor %}
 </div>
 
-<!-- HTML Form Editing Session Information -->
+<!--  -->
 {% if request.user.is_superuser %}
 <div>
   Edit:<br>
-  <div>
-    <a href="{% url 'session_edit' session_id %}">
-        <button 
-            type="button" 
-            class="btn btn-secondary btn-sm"
-            style="margin: 10px;"
-        >
-            Edit Session Info
-        </button>
-    </a>
-  </div>
+  <!-- HTML Form Editing Session Information -->
+    <div>
+      <a href="{% url 'session_edit' session_id %}">
+          <button 
+              type="button" 
+              class="mb-1 btn btn-secondary btn-sm"
+          >
+              Edit Session Info
+          </button>
+      </a>
+    </div>
+  <!-- HTML Form For Adding Played Tune Group -->
+    <div class="mb-1">
+      <button type="button" id="playedTuneGroupAddFormBtn" class="btn btn-secondary btn-sm" style="display: ;">
+          Add Played Set
+      </button>
+    </div>
+
+    <div 
+        id="playedTuneGroupAddForm" 
+        style="display: none;"
+    >
+        {% include "session/htmlforms/session_add_tune_set_form.html" %}
+    </div>
 </div>
 {% endif %}
-
-<!-- HTML Form For Adding Played Tune Group -->
-
-<div class="col-md-12" style="margin: 10px;">
-  <button type="button" id="playedTuneGroupAddFormBtn" class="btn btn-secondary btn-sm" style="display: ;">
-      Add Played Set
-  </button>
-</div>
-
-<div 
-    id="playedTuneGroupAddForm" 
-    style="display: none; margin: 10px;"
->
-    {% include "session/htmlforms/session_add_tune_set_form.html" %}
-</div>
 
 <!-- Played Tunes For Session -->
 <br>
