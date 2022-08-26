@@ -1,33 +1,41 @@
 <hr>
+
 <div style="text-decoration: underline;">
 Add Tune Set
 </div>
-<form method="POST" action="">
+
+<form method="POST" action="" class="container">
     <!-- Hidden Session Information -->
     <input type="hidden" id="session-id" value="{{ session_id }}">
     <!-- Displayed Tune Group Information -->
-    <div class="form-group" style="margin: 10px;">
-        <label for="tune-group-number">Set Number:</label>
-        <input type="number" class="form-control" id="tune-group-number" min="1"/>
+    <div class="mb-3 row">
+        <div class="col-6">
+            <label for="tune-group-number">Set Number:</label>
+            <input type="number" class="form-control" id="tune-group-number" min="1"/>
+        </div>
     </div>
-    <div class="form-group" style="margin: 10px;">
-        <label for="start-time">Start Time of Tune Set:</label>
-        <input type="text" class="form-control" id="start-time" value="00:00:00" />
+    <div class="mb-3 row">
+        <div class="col-6">
+            <label for="start-time">Start Time of Tune Set:</label>
+            <input type="text" class="form-control mb-1" id="start-time" value="00:00:00" />
+            <button type="button" class="btn btn-secondary btn-sm" id="startTimeYoutubeVideoAddBtn">Add Current Video Time</button>
+        </div>
+        <div class="col-6">
+            <label for="end-time">End Time of Tune Set:</label>
+            <input type="text" class="form-control mb-1" id="end-time" value="00:00:00" />
+            <button type="button" class="btn btn-secondary btn-sm" id="endTimeYoutubeVideoAddBtn">Add Current Video Time</button>
+        </div>
     </div>
-    <div class="form-group" style="margin: 10px;">
-        <label for="end-time">End Time of Tune Set:</label>
-        <input type="text" class="form-control" id="end-time" value="00:00:00" />
-    </div>
-    <div style="margin: 10px;">
-        <div class="checkbox">
+    <div class="mb-3 row">
+        <div class="col-3 checkbox">
             <label>Is Offertory Set: <input type="checkbox" id="offertory"></label>
         </div>
-        <div class="checkbox">
+        <div class="col-3 checkbox">
             <label>Is Teaching Set: <input type="checkbox" id="teaching"></label>
         </div>
     </div>
     <!-- Button For Submitting -->
-    <div style="margin: 10px;">
+    <div class="mb-3">
         <button type="submit" class="btn btn-success btn-sm">Submit Group</button>
         <button type="button" class="btn btn-secondary btn-sm" id="hidePlayedTuneGroupAddFormBtn">Hide Add Tune Set Form</button>
     </div>
