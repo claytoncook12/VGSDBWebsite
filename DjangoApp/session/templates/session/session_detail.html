@@ -57,7 +57,7 @@
     {% for group in tune_groups_buttons %}
     <button type="button"  id="set{{ group.session_order_num }}"
     onclick="startSpecificTime({{group.start_time.seconds}})" 
-    class="btn btn-outline-dark btn-sm">
+    class="mb-1 btn btn-outline-dark btn-sm">
         Set {{ group.session_order_num }}<br>
     </button>
     {% endfor %}
