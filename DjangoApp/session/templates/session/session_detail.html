@@ -51,22 +51,10 @@
       }
     </script>
 
-<!-- HTML for Set Buttons -->
-<div class='text-center'><b>Go to:</b></div>
-<div class="btn-block flex-wrap text-center" role="group" aria-label="Basic example">
-    {% for group in tune_groups_buttons %}
-    <button type="button"  id="set{{ group.session_order_num }}"
-    onclick="startSpecificTime({{group.start_time.seconds}})" 
-    class="mb-1 btn btn-outline-dark btn-sm">
-        Set {{ group.session_order_num }}<br>
-    </button>
-    {% endfor %}
-</div>
-
 <!-- Edit Data and Forms For SuperUsers -->
 {% if request.user.is_superuser %}
 <div>
-  Edit: <br>
+<br>
   <!-- HTML Form Editing Session Information -->
     <div>
       <a href="{% url 'session_edit' session_id %}">
@@ -94,8 +82,19 @@
 </div>
 {% endif %}
 
+<!-- HTML for Set Buttons -->
+<div class='text-center'><b>Go to:</b></div>
+<div class="btn-block flex-wrap text-center" role="group" aria-label="Basic example">
+    {% for group in tune_groups_buttons %}
+    <button type="button"  id="set{{ group.session_order_num }}"
+    onclick="startSpecificTime({{group.start_time.seconds}})" 
+    class="mb-1 btn btn-outline-dark btn-sm">
+        Set {{ group.session_order_num }}<br>
+    </button>
+    {% endfor %}
+</div>
+
 <!-- Played Tunes For Session -->
-<h3>Tunes Played</h3>
   <div class="row justify-content-md-center" style="margin: 0 10px 0 10px;">
     {% for group in tune_groups %}
     <div class="card mb-3 col-lg-8 col-md-12">
