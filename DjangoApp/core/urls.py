@@ -32,4 +32,7 @@ urlpatterns = [
     path('youtube_loop_test2/', views.youtube_loop_test2, name='youtube_loop_test2'),
     path('adminlinks/', views.admin_links, name='admin_links'),
     path('adminlinks/sessionjson/', views.session_json, name="session_json"),
+    
+    # Testing Paths
+    path('testing/', views.testing_path, name='testing_path')
 ]

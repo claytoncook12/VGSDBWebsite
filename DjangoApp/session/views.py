@@ -68,8 +68,8 @@ def session_detail(request, session_id):
     """
 
     # TODO Look at How to Submitting Post Data
-    # if request.method == 'POST':
-    #     breakpoint()
+    if request.method == 'POST':
+        breakpoint()
 
     # Get Session If Available
     session_id_detail = get_object_or_404(Session, session_id=session_id)
@@ -278,4 +278,11 @@ def session_json(request):
 
     return response
 
+# Testing Path
+@user_passes_test(lambda u: u.is_superuser)
+def testing_path(request):
+    
+    if request.method == "POST":
+        breakpoint()
 
+    return render(request, 'session/testing.html') 

@@ -1,0 +1,12 @@
+{% extends 'session/base.html' %}
+{% load static %}
+
+{% block content %}
+<h1>Testing Here</h1>
+
+<form action="" method="post">
+    {% csrf_token %}
+    <input type="number" id="submitted-number" name="submitted-number">
+    <input type="submit" value="Submit">
+</form>
+{% endblock %}
