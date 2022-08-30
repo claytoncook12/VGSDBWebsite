@@ -4,10 +4,15 @@
 Add Tune Set
 </div>
 
-<form method="post" action="/testing/" class="container">
+<form method="post" action="{% url 'session_add_played_group' %}" class="container">
     {% csrf_token %}
     <!-- Hidden Session Information -->
-    <input type="hidden" id="session-id" value="{{ session_id }}">
+    <input 
+        type="hidden"
+        id="session-id"
+        name="session-id"
+        value="{{ session_id }}"
+    >
     <!-- Displayed Tune Group Information -->
     <div class="mb-3 row">
         <div class="col-md-6 col-sm-12">

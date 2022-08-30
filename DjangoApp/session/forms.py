@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 
-from .models import Session
+from .models import Session, PlayedTuneGroup
 
 from .session_shared_functions import check_youtube_url
 
@@ -28,3 +28,7 @@ class SessionForm(ModelForm):
             message = message
             self.add_error('youtube_url', message)
 
+class PlayedTuneGroupForm(ModelForm):
+    class Meta:
+        model = PlayedTuneGroup
+        fields = "__all__"

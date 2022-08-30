@@ -11,7 +11,7 @@ from django.conf import settings
 from .models import Key, Session, PlayedTuneGroup, Tune, PlayedTune, NameYerTune, TuneOfTheMonth, TuneType
 from django.db.models import Count, Aggregate, CharField
 import datetime
-from .forms import SessionForm
+from .forms import SessionForm, PlayedTuneGroupForm
 
 # Code for Custom ORM Method
 class Concat(Aggregate):
@@ -136,8 +136,23 @@ def session_add_played_group(request):
     """
 
     if request.method == 'POST':
-        breakpoint()
+        # Set Data For Form Class
+        data = {
+            'session': request.POST['session-id'],
+            'session_order_num': request.POST['tune-group-number'],
+            'start_time': request.POST['start-time'],
+            'end_time': request.POST['end-time'],
+            'offertory': True if 'offertory' in request.POST else False, # Checkbox
+            'teaching': True if 'teaching' in request.POST else False, # Checkbox
+        }
+        # Set Data Into Form
+        form = PlayedTuneGroupForm(data)
+        # Check If Form Is Valid
+        if form.is_valid():
+            form.save()
     
+    # TODO: Create Proper Return Url
+
     return redirect(full_yt_session_list)
 
 def tunes_all(request, page):
