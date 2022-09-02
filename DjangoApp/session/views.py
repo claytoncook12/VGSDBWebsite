@@ -150,10 +150,8 @@ def session_add_played_group(request):
         # Check If Form Is Valid
         if form.is_valid():
             form.save()
-    
-    # TODO: Create Proper Return Url
 
-    return redirect(full_yt_session_list)
+    return redirect(session_detail, session_id=data['session'])
 
 def tunes_all(request, page):
     """
