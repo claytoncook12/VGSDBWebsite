@@ -1,0 +1,79 @@
+<hr>
+
+<div style="text-decoration: underline;">
+Add Tune Set
+</div>
+
+<form method="post" action="{% url 'session_add_played_group' %}" class="container">
+    {% csrf_token %}
+    <!-- Hidden Session Information -->
+    <input 
+        type="hidden"
+        id="session-id"
+        name="session-id"
+        value="{{ session_id }}"
+    >
+    <!-- Displayed Tune Group Information -->
+    <div class="mb-3 row">
+        <div class="col-md-6 col-sm-12">
+            <label for="tune-group-number">Set Number:</label>
+            <input 
+                required
+                type="number"
+                class="form-control"
+                id="tune-group-number"
+                name="tune-group-number"
+                min="1"/>
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <div class="col-md-6 col-sm-12">
+            <div class="form-group">
+                <label for="start-time">Start Time of Tune Set:</label>
+                <input
+                    required
+                    type="text"
+                    class="form-control mb-1"
+                    id="start-time"
+                    name="start-time"
+                    value="HH:MM:SS"
+                    pattern="[\d]+:[\d]{2,}:[\d]{2,}"
+                    title="Please have numbers with the format HH:MM:SS"
+                />
+                <button type="button" class="mb-1 btn btn-secondary btn-sm" id="startTimeYoutubeVideoAddBtn">Add Current Video Time</button>
+                <small id="start-time-help" class="form-text text-muted">Format must be HH:MM:SS</small>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <div class="form-group">
+                <label for="end-time">End Time of Tune Set:</label>
+                <input
+                    required
+                    type="text"
+                    class="form-control mb-1"
+                    id="end-time"
+                    name="end-time"
+                    value="HH:MM:SS"
+                    pattern="[\d]+:[\d]{2,}:[\d]{2,}"
+                    title="Please have numbers with the format HH:MM:SS"
+                />
+                <button type="button" class="mb-1 btn btn-secondary btn-sm" id="endTimeYoutubeVideoAddBtn">Add Current Video Time</button>
+                <small id="start-time-help" class="form-text text-muted">Format must be HH:MM:SS</small> </div>
+            </div>
+        </div>
+    <div class="mb-3 row">
+        <div class="checkbox col-md-3 col-sm-6">
+            <label>Is Offertory Set: <input type="checkbox" id="offertory" name="offertory"></label>
+        </div>
+        <div class="checkbox col-md-3 col-sm-6">
+            <label>Is Teaching Set: <input type="checkbox" id="teaching" name="teaching"></label>
+        </div>
+    </div>
+    <!-- Button For Submitting -->
+    <div class="mb-3">
+        <input type="submit" value="Submit" class="btn btn-success btn-sm">
+        <button type="button" class="btn btn-secondary btn-sm" id="hidePlayedTuneGroupAddFormBtn">Hide Add Tune Set Form</button>
+    </div>
+</form>
+
+<hr>

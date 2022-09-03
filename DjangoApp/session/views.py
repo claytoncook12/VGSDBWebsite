@@ -11,7 +11,7 @@ from django.conf import settings
 from .models import Key, Session, PlayedTuneGroup, Tune, PlayedTune, NameYerTune, TuneOfTheMonth, TuneType
 from django.db.models import Count, Aggregate, CharField
 import datetime
-from .forms import SessionForm
+from .forms import SessionForm, PlayedTuneGroupForm
 
 # Code for Custom ORM Method
 class Concat(Aggregate):
@@ -67,7 +67,11 @@ def session_detail(request, session_id):
     Display of Youtube Session Details
     """
 
-    # Get Session If Avaliable
+    # TODO Look at How to Submitting Post Data
+    if request.method == 'POST':
+        breakpoint()
+
+    # Get Session If Available
     session_id_detail = get_object_or_404(Session, session_id=session_id)
     session_date = session_id_detail.date
 
@@ -124,6 +128,30 @@ def session_edit(request, session_id):
         form = SessionForm(instance=session)
     
     return render(request, 'session/session_edit.html', {'form': form, 'session_id': session_id}) 
+
+@user_passes_test(lambda u: u.is_superuser)
+def session_add_played_group(request):
+    """
+    Add Played Group to Session
+    """
+
+    if request.method == 'POST':
+        # Set Data For Form Class
+        data = {
+            'session': request.POST['session-id'],
+            'session_order_num': request.POST['tune-group-number'],
+            'start_time': request.POST['start-time'],
+            'end_time': request.POST['end-time'],
+            'offertory': True if 'offertory' in request.POST else False, # Checkbox
+            'teaching': True if 'teaching' in request.POST else False, # Checkbox
+        }
+        # Set Data Into Form
+        form = PlayedTuneGroupForm(data)
+        # Check If Form Is Valid
+        if form.is_valid():
+            form.save()
+
+    return redirect(session_detail, session_id=data['session'])
 
 def tunes_all(request, page):
     """
@@ -263,4 +291,11 @@ def session_json(request):
 
     return response
 
+# Testing Path
+@user_passes_test(lambda u: u.is_superuser)
+def testing_path(request):
+    
+    if request.method == "POST":
+        breakpoint()
 
+    return render(request, 'session/testing.html') 

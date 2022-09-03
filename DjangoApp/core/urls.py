@@ -27,8 +27,12 @@ urlpatterns = [
     path('session/<int:session_id>/', views.session_detail, name='session_detail'),
     path('session/add/', views.session_add, name='session_add'),
     path('session/<int:session_id>/edit', views.session_edit, name='session_edit'),
+    path('session/session-played-group/add', views.session_add_played_group, name="session_add_played_group"),
     path('nameyertune/all/', views.nameyertune_all, name='nameyertune_all'),
     path('youtube_loop_test2/', views.youtube_loop_test2, name='youtube_loop_test2'),
     path('adminlinks/', views.admin_links, name='admin_links'),
     path('adminlinks/sessionjson/', views.session_json, name="session_json"),
+    
+    # Testing Paths
+    path('testing/', views.testing_path, name='testing_path')
 ]

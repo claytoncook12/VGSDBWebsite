@@ -1,15 +1,19 @@
 {% extends 'session/base.html' %}
 {% load static %}
 
+{% block optional_js_at_bottom %}
+<script type="text/javascript" src="{% static 'session/js/playedTuneGroupBtn.js' %}"></script>
+<script type="text/javascript" src="{% static 'session/js/addCurrentTimeAddTuneSetForm.js' %}"></script>
+{% endblock %}
+
 {% block content %}
 <!-- Custom CSS -->
 <link rel="stylesheet" href="{% static 'session/css/session_detail.css' %}">
-
-<h1>{{ session_id_detail.name|title }}</h1>
-<h2>{{ session_date|date:"F d, Y" }}</h2>
+<div class="mb-3"></div>
 <div class="ratio ratio-16x9">
     <div class="embed-responsive-item" id="player"></div>
 </div>
+{{ session_date|date:"F d, Y" }}: {{ session_id_detail.name|title }}
 
     <script>
       // 2. This code loads the IFrame Player API code asynchronously.
@@ -47,52 +51,68 @@
       }
     </script>
 
+<!-- Edit Data and Forms For SuperUsers -->
+{% if request.user.is_superuser %}
+<div>
+<br>
+  <!-- HTML Form Editing Session Information -->
+    <div>
+      <a href="{% url 'session_edit' session_id %}">
+          <button 
+              type="button" 
+              class="mb-1 btn btn-secondary btn-sm"
+          >
+              Edit Session Info
+          </button>
+      </a>
+    </div>
+  <!-- HTML Form For Adding Played Tune Group -->
+    <div class="mb-1">
+      <button type="button" id="playedTuneGroupAddFormBtn" class="btn btn-secondary btn-sm" style="display: ;">
+          Add Played Set
+      </button>
+    </div>
+
+    <div 
+        id="playedTuneGroupAddForm" 
+        style="display: none;"
+    >
+        {% include "session/htmlforms/session_add_tune_set_form.html" %}
+    </div>
+</div>
+{% endif %}
+
 <!-- HTML for Set Buttons -->
 <div class='text-center'><b>Go to:</b></div>
 <div class="btn-block flex-wrap text-center" role="group" aria-label="Basic example">
     {% for group in tune_groups_buttons %}
     <button type="button"  id="set{{ group.session_order_num }}"
     onclick="startSpecificTime({{group.start_time.seconds}})" 
-    class="btn btn-outline-dark btn-sm">
+    class="mb-1 btn btn-outline-dark btn-sm">
         Set {{ group.session_order_num }}<br>
     </button>
     {% endfor %}
 </div>
 
-<!-- HTML Form Editing Session Information -->
-{% if request.user.is_superuser %}
-<div>
-  Edit:<br>
-  <div>
-    <a href="{% url 'session_edit' session_id %}">
-        <button 
-            type="button" 
-            class="btn btn-secondary btn-sm"
-            style="margin: 10px;"
-        >
-            Edit Session Info
-        </button>
-    </a>
-  </div>
-</div>
-{% endif %}
-
 <!-- Played Tunes For Session -->
-<br>
-<h3>Tunes Played</h3>
-{% for group in tune_groups %}
-    <h5>
-        Set {{ group.group.session_order_num }}
-        {% if  group.group.offertory %} (Offertory) {% endif %}
-        {% if group.group.teaching %} (Teaching) {% endif %}
-        :
-    </h5> 
-    <p>
-        &emsp;({{ group.group.start_time }} to {{ group.group.end_time }})
-    </p>
-    <ol>
-    {% for tune in group.played_tunes %}
-        <li>
+  <div class="row justify-content-md-center" style="margin: 0 10px 0 10px;">
+    {% for group in tune_groups %}
+    <div class="card mb-3 col-lg-8 col-md-12">
+      <div class="card-header" style="background-color: #fff;">
+        <div class="d-flex">
+          <h4 style="text-align: left;">
+            Set {{ group.group.session_order_num }}
+            </h4>
+            <span class="ms-auto">
+              {{ group.group.start_time }} to {{ group.group.end_time }}
+            </span>
+        </div>
+          {% if  group.group.offertory %} Offertory {% endif %}
+          {% if group.group.teaching %} Teaching {% endif %}
+      </div>
+      <ul class="list-group list-group-flush">
+        {% for tune in group.played_tunes %}
+        <li class="list-group-item">
             <a href="{% url 'tune_detail' tune.tune.pk %}">
                 {{ tune.tune.name1|title }} 
                 {% if tune.tune.name2 %}
@@ -101,12 +121,23 @@
                 ({{ tune.key|title }}) ({{ tune.tune.tune_type.tune_type_char|title }})
             </a>
             {% if  tune.add_info != '' or tune.tune.tune_info != '' %}
+            <br>
             Notes:{% if tune.add_info != '' %} {{ tune.add_info }}{% if tune.tune.tune_info != '' %},{% endif %}{% endif %} {{ tune.tune.tune_info }}
             {% endif %}
         </li>
+        {% endfor %}
+      </ul>
+      <div class="card-body">
+        <button type="button"  id="cardSet{{ group.group.session_order_num }}"
+          onclick="startSpecificTime({{group.group.start_time.seconds}})" 
+          class="mb-1 btn btn-outline-dark btn-sm">
+            Play Set
+        </button>
+      </div>
+    </div>
     {% endfor %}
-    </ol>
-{% endfor %}
+  </div>
+
 </div>
 
 {% endblock %}
