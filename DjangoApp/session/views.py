@@ -161,6 +161,19 @@ def session_add_played_tune(request, played_tune_group_id):
     # Set Default Context Parameter
     context = {'played_tune_group_id': played_tune_group_id}
 
+    # Get PlayedTuneGroup
+    played_tune_group = get_object_or_404(PlayedTuneGroup, played_tune_group_id=played_tune_group_id)
+    context['played_tune_group'] = played_tune_group
+
+    if request.method == 'POST':
+        # Set Data for Form Class
+        data = {}
+        # TODO Set Data into Form
+        #form =
+        # Check If Form is Valid
+        #if form.is_valid():
+        #   form.save()
+
     return render(request, "session/session_add_played_tune.html", context)
 
 @user_passes_test(lambda u: u.is_superuser)

@@ -1,0 +1,81 @@
+<div style="text-decoration: underline;">
+    Add Tune to Played Set:
+</div>
+<div class="mb-3">
+    {{ played_tune_group }}
+</div>
+
+<form method="post" action="" class="container">
+    {% csrf_token %}
+    <!-- Hidden Played Group Information -->
+    <input 
+        type="hidden"
+        id="played_tune_group_id"
+        name="played_tune_group_id"
+        value="{{ played_tune_group_id }}"
+    >
+    <!-- Displayed Played Tune Information -->
+    <div class="row">
+        <div class="mb-2 col-md-6 col-sm-12">
+            <label for="tune_order_number">
+                Tune Order:
+            </label>
+            <input
+                required
+                type="number"
+                class="form-control"
+                id="tune_order_number"
+                name="tune_order_number"
+                min="1"/>
+        </div>
+    </div>
+    <div class="mb-2 row">
+        <div class="col-md-6 col-sm-12">
+            <label for="tune">
+                Tune:
+            </label>
+            <select
+                required
+                class="form-control"
+                id="tunes"
+                name="tunes">
+                <option value="none" selected disabled hidden>Select a Tune</option> 
+                <option value="value_id">Tune Name 1</option>
+                <option value="value_id">Tune Name 2</option>
+                <option value="value_id">Tune Name 3</option>
+            </select>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <label for="key">
+                Key:
+            </label>
+            <select
+                required
+                class="form-control"
+                id="keys"
+                name="keys">
+                <option value="none" selected disabled hidden>Select a Key</option> 
+                <option value="value_id">Key 1</option>
+                <option value="value_id">Key 2</option>
+                <option value="value_id">Key 3</option>
+            </select>
+        </div>
+        <div class="mb-2 col-sm-12">
+            <label for="add_info">Additional Information</label>
+            <textarea
+                type="text"
+                class="form-control"
+                rows="6"
+                cols="50"
+                autocomplete="off"
+                id="add_info"
+                name="add_info"
+                maxlength="300">
+            </textarea>
+        </div>
+    </div>
+    <!-- Button For Submitting -->
+    <div class="mb-3">
+        <input type="submit" value="Submit" class="btn btn-success btn-sm">
+    </div>
+</form>
