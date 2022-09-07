@@ -127,12 +127,37 @@
         </li>
         {% endfor %}
       </ul>
+      <!-- Action Buttons for Tune Group -->
       <div class="card-body">
-        <button type="button"  id="cardSet{{ group.group.session_order_num }}"
+        <button type="button" id="cardSet{{ group.group.session_order_num }}"
           onclick="startSpecificTime({{group.group.start_time.seconds}})" 
           class="mb-1 btn btn-outline-dark btn-sm">
             Play Set
         </button>
+        <!-- Admin Action Buttons for Tune Group -->
+        {% if request.user.is_superuser %}
+        <a 
+          href="{% url 'session_add_played_tune' group.group.played_tune_group_id %}"
+          class="mb-1 btn btn-outline-dark btn-sm"
+          role="button"
+        >
+          Add Tune to Set
+        </a>        
+        <a
+          href="{% url 'session_edit_played_group' group.group.played_tune_group_id %}"
+          class="mb-1 btn btn-outline-dark btn-sm"
+          role="button"
+        >
+          Edit Tune to Set
+        </a>
+        <a 
+          href="{% url 'session_delete_played_group' group.group.played_tune_group_id %}"
+          class="mb-1 btn btn-outline-dark btn-sm"
+          role="button"
+        >
+          Delete Tune Set
+        </a>
+        {% endif %}
       </div>
     </div>
     {% endfor %}

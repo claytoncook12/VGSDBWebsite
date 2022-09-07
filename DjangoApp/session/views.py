@@ -153,6 +153,36 @@ def session_add_played_group(request):
 
     return redirect(session_detail, session_id=data['session'])
 
+@user_passes_test(lambda u: u.is_superuser)
+def session_add_played_tune(request, played_tune_group_id):
+    """
+    Add Played Tune to Played Group
+    """
+    # Set Default Context Parameter
+    context = {'played_tune_group_id': played_tune_group_id}
+
+    return render(request, "session/session_add_played_tune.html", context)
+
+@user_passes_test(lambda u: u.is_superuser)
+def session_edit_played_group(request, played_tune_group_id):
+    """
+    Edit Played Tune Group
+    """
+    # Set Default Context Parameter
+    context = {'played_tune_group_id': played_tune_group_id}
+
+    return render(request, "session/session_edit_played_group.html", context)
+
+@user_passes_test(lambda u: u.is_superuser)
+def session_delete_played_group(request, played_tune_group_id):
+    """
+    Delete Played Tune Group
+    """
+    # Set Default Context Parameter
+    context = {'played_tune_group_id': played_tune_group_id}
+
+    return render(request, "session/session_delete_played_group.html", context)
+
 def tunes_all(request, page):
     """
     Temp: Display All Tunes in Database
