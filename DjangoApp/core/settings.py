@@ -81,8 +81,8 @@ if config('DB_SETUP') == 'local':
     DATABASES = {
         'default': {
             'ENGINE': 'mysql.connector.django',
-            'NAME': 'db',
-            'USER': 'user',
+            'NAME': 'mysql',
+            'USER': 'root',
             'PASSWORD': 'password',
             'HOST': 'localhost',
             'PORT': 3306,
