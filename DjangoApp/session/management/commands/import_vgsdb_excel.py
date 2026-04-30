@@ -15,6 +15,10 @@ For "set dance (jig)" the prefix itself contains parentheses, e.g.:
 
     "Set Dance (jig): Some Tune (d)"
 
+For groups containing multiple tune types, separate sub-sections with ';':
+
+    "Barndance: Bill Malley's Barndance (g); An Dro: The Wren (emin)"
+
 Usage:
     python manage.py import_vgsdb_excel path/to/vgsdb_data.xlsx [--dry-run]
 """
@@ -36,14 +40,16 @@ from session.models import (
 # ---------------------------------------------------------------------------
 
 CANONICAL_TUNE_TYPES = {
+    "5/8",
     "air", "an dro", "barndance", "fling", "hop jig", "hornpipe", "hymn",
-    "jig", "jig/slip jig", "march", "mazurka", "o'carolan", "polka", "reel",
-    "scottish country dance", "set dance", "set dance (jig)", "slide",
-    "slip jig", "slow reel", "song", "strathspey", "surf tango", "waltz",
-    "welsh",
+    "jig", "jig/slip jig", "lullaby", "march", "mazurka", "o'carolan",
+    "polka", "reel", "scottish country dance", "set dance",
+    "set dance (jig)", "single reel", "slide", "slip jig", "slow reel", "song",
+    "strathspey", "surf tango", "waltz", "welsh",
 }
 
 TUNE_TYPE_NORMALIZE = {
+    "5/8": "5/8",
     "air": "air", "airs": "air",
     "an dro": "an dro", "an dros": "an dro", "andro": "an dro",
     "barndance": "barndance", "barndances": "barndance",
@@ -54,6 +60,7 @@ TUNE_TYPE_NORMALIZE = {
     "hymn": "hymn", "hymns": "hymn",
     "jig": "jig", "jigs": "jig",
     "jig/slip jig": "jig/slip jig", "jig/slip jigs": "jig/slip jig",
+    "lullaby": "lullaby", "lullabies": "lullaby",
     "march": "march", "marches": "march",
     "mazurka": "mazurka", "mazurkas": "mazurka",
     "o'carolan": "o'carolan", "ocarolan": "o'carolan",
@@ -64,6 +71,7 @@ TUNE_TYPE_NORMALIZE = {
     "set dance": "set dance", "set dances": "set dance",
     "set dance (jig)": "set dance (jig)",
     "set dances (jig)": "set dance (jig)",
+    "single reel": "single reel", "single reels": "single reel",
     "slide": "slide", "slides": "slide",
     "slip jig": "slip jig", "slip jigs": "slip jig",
     "slow reel": "slow reel", "slow reels": "slow reel",
@@ -181,41 +189,78 @@ def split_prefix_and_rest(cell_text):
 
 def parse_tunes_cell(cell_text):
     """
-    'Reels: Foo (d), Bar (emin)' ->
-        ('reel', [('Foo', 'd'), ('Bar', 'emin')])
+    Parse a tunes cell into a flat ordered list of (tune_type, name, key).
+
+    Single-type cell:
+        'Reels: Foo (d), Bar (emin)'
+        -> [('reel', 'Foo', 'd'), ('reel', 'Bar', 'emin')]
+
+    Multi-type cell (sub-sections separated by ';'), each sub-section follows
+    the same '<TuneType>: <tunes...>' grammar:
+        'Barndance: Bill (g); An Dro: Wren (emin)'
+        -> [('barndance', 'Bill', 'g'), ('an dro', 'Wren', 'emin')]
     """
     if not cell_text or not str(cell_text).strip():
         raise ValueError("Empty tunes cell.")
 
-    prefix, rest = split_prefix_and_rest(str(cell_text))
-    tune_type = normalize_tune_type(prefix)
+    text = str(cell_text)
 
-    # Split items on commas that are NOT inside parentheses.
-    parts = re.split(r",\s*(?![^()]*\))", rest)
+    # Split top-level sub-sections on ';' (parens aware, just in case).
+    sections = _split_top_level(text, ";")
 
-    tunes = []
-    for part in parts:
-        item = part.strip()
-        if not item:
+    out = []
+    for section in sections:
+        section = section.strip()
+        if not section:
             continue
-        m = TUNE_RE.match(item)
-        if m:
-            name = m.group("name").strip().rstrip(",").strip()
-            key = normalize_key(m.group("key"))
-        else:
-            # No trailing "(...)" — treat the whole item as the name with a blank key.
-            name = item.rstrip(",").strip()
-            key = normalize_key("")
-        if not name:
-            raise ValueError(
-                f"Empty tune name in segment {item!r} of cell {cell_text!r}"
-            )
-        tunes.append((name, key))
+        prefix, rest = split_prefix_and_rest(section)
+        tune_type = normalize_tune_type(prefix)
 
-    if not tunes:
+        # Split items on commas that are NOT inside parentheses.
+        parts = re.split(r",\s*(?![^()]*\))", rest)
+        for part in parts:
+            item = part.strip()
+            if not item:
+                continue
+            m = TUNE_RE.match(item)
+            if m:
+                name = m.group("name").strip().rstrip(",").strip()
+                key = normalize_key(m.group("key"))
+            else:
+                # No trailing "(...)" — treat the whole item as the name with a blank key.
+                name = item.rstrip(",").strip()
+                key = normalize_key("")
+            if not name:
+                raise ValueError(
+                    f"Empty tune name in segment {item!r} of cell {cell_text!r}"
+                )
+            out.append((tune_type, name, key))
+
+    if not out:
         raise ValueError(f"No tunes parsed from cell: {cell_text!r}")
 
-    return tune_type, tunes
+    return out
+
+
+def _split_top_level(text, sep):
+    """Split `text` on `sep` characters that are NOT inside parentheses."""
+    parts = []
+    buf = []
+    depth = 0
+    for ch in text:
+        if ch == "(":
+            depth += 1
+            buf.append(ch)
+        elif ch == ")":
+            depth = max(0, depth - 1)
+            buf.append(ch)
+        elif ch == sep and depth == 0:
+            parts.append("".join(buf))
+            buf = []
+        else:
+            buf.append(ch)
+    parts.append("".join(buf))
+    return parts
 
 
 # ---------------------------------------------------------------------------
@@ -340,6 +385,14 @@ class Command(BaseCommand):
                     f"played_tune_group_number are required."
                 )
 
+            # Skip rows scaffolded with session metadata but no group data yet
+            # (no start time and no tunes text).
+            if start_t is None and (tunes_text is None or not str(tunes_text).strip()):
+                self.stdout.write(
+                    f"Row {row_num}: skipping (no start_time / tunes filled in yet)."
+                )
+                continue
+
             session_date = s_date.date() if isinstance(s_date, datetime) else s_date
 
             session, _created = Session.objects.get_or_create(
@@ -355,7 +408,7 @@ class Command(BaseCommand):
 
             try:
                 start_td = time_to_timedelta(start_t)
-                end_td = time_to_timedelta(end_t)
+                end_td = time_to_timedelta(end_t) if end_t is not None else None
             except ValueError as exc:
                 raise CommandError(f"Row {row_num}: {exc}") from exc
 
@@ -377,15 +430,18 @@ class Command(BaseCommand):
             groups_created += 1
 
             try:
-                tune_type_str, tunes = parse_tunes_cell(tunes_text)
+                tunes = parse_tunes_cell(tunes_text)
             except ValueError as exc:
                 raise CommandError(f"Row {row_num}: {exc}") from exc
 
-            tune_type, _ = TuneType.objects.get_or_create(
-                tune_type_char=tune_type_str,
-            )
+            tune_type_cache = {}
 
-            for order, (name, key_str) in enumerate(tunes, start=1):
+            for order, (tune_type_str, name, key_str) in enumerate(tunes, start=1):
+                if tune_type_str not in tune_type_cache:
+                    tune_type_cache[tune_type_str], _ = TuneType.objects.get_or_create(
+                        tune_type_char=tune_type_str,
+                    )
+                tune_type = tune_type_cache[tune_type_str]
                 key, _ = Key.objects.get_or_create(key_type_char=key_str)
                 try:
                     tune = self._resolve_tune(name, tune_type, row_num)
@@ -399,9 +455,10 @@ class Command(BaseCommand):
                 )
                 played_tunes_created += 1
 
+            types_summary = ",".join(sorted({t for t, _, _ in tunes}))
             self.stdout.write(
                 f"Row {row_num}: session={session.pk} group#{group_num} "
-                f"type={tune_type_str} tunes={len(tunes)}"
+                f"types={types_summary} tunes={len(tunes)}"
             )
 
         return {
@@ -422,7 +479,7 @@ class Command(BaseCommand):
              - Else: warn (unless --allow-new-tunes) and create a new Tune.
           3. Otherwise: create a new Tune.
         """
-        name = raw_name.strip().lower()
+        name = _normalize_text(raw_name)
 
         # 1. Exact cross-name match.
         existing = Tune.objects.filter(tune_type=tune_type).filter(

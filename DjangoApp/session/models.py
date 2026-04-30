@@ -79,13 +79,13 @@ class PlayedTuneGroup(models.Model):
     session = models.ForeignKey(Session, on_delete=models.CASCADE, verbose_name="Session")
     session_order_num = models.IntegerField('Order of Tune Group')
     start_time = models.DurationField('Start Time of Group\nin Youtube Recording')
-    end_time = models.DurationField('End Time of Group\nin Youtube Recording')
+    end_time = models.DurationField('End Time of Group\nin Youtube Recording', null=True, blank=True)
     offertory = models.BooleanField('Is Tune group an offertory?')
     teaching = models.BooleanField('Is Tune a Teaching Set?', default=False)
 
     def __str__(self):
         return self.session.date.strftime("%m/%d/%Y") + ": Song Group " + str(self.session_order_num) + " [" + \
-        str(self.start_time) + " to " + str(self.end_time) + "]"
+        str(self.start_time) + " to " + (str(self.end_time) if self.end_time is not None else "?") + "]"
 
 class PlayedTune(models.Model):
     played_tune_id = models.AutoField(primary_key=True)

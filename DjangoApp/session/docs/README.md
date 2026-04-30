@@ -36,17 +36,26 @@ played_tune_group_end_time | played_tune_group_tunes | offeratory
 
 ### `played_tune_group_tunes` cell grammar
 
+Single tune type per group:
+
 ```
 <TuneType>: <Name1> (<key>), <Name2> (<key>), ...
 ```
 
-- The prefix before the first top-level `:` is the tune type. Parens inside the prefix are allowed (e.g. `Set Dance (jig): ...`).
+Multiple tune types in one group — separate sub-sections with `;`:
+
+```
+<TuneType1>: <NameA> (<key>); <TuneType2>: <NameB> (<key>), <NameC> (<key>)
+```
+
+- The prefix before the first top-level `:` (within each sub-section) is the tune type. Parens inside the prefix are allowed (e.g. `Set Dance (jig): ...`).
 - Each tune segment ends with `(<key>)`. Blank key `()` is allowed. A segment with no trailing `(...)` is treated as having a blank key.
 - Commas inside parens are ignored when splitting tune segments.
+- `;` characters inside parens are ignored when splitting sub-sections.
 
 ### Allowed values
 
-- **Tune types**: `air`, `an dro`, `barndance`, `fling`, `hop jig`, `hornpipe`, `hymn`, `jig`, `jig/slip jig`, `march`, `mazurka`, `o'carolan`, `polka`, `reel`, `scottish country dance`, `set dance`, `set dance (jig)`, `slide`, `slip jig`, `slow reel`, `song`, `strathspey`, `surf tango`, `waltz`, `welsh`. Common plurals (`reels`, `jigs`, ...) are normalized.
+- **Tune types**: `air`, `an dro`, `barndance`, `fling`, `hop jig`, `hornpipe`, `hymn`, `jig`, `jig/slip jig`, `lullaby`, `march`, `mazurka`, `o'carolan`, `polka`, `reel`, `scottish country dance`, `set dance`, `set dance (jig)`, `slide`, `slip jig`, `slow reel`, `song`, `strathspey`, `surf tango`, `waltz`, `welsh`. Common plurals (`reels`, `jigs`, ...) are normalized.
 - **Keys**: see `CANONICAL_KEYS` in `commands/import_vgsdb_excel.py`. Blank is valid. Unknown keys raise an error.
 
 ## Behavior
