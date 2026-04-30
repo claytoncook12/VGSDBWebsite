@@ -81,7 +81,7 @@ if config('DB_SETUP') == 'local':
     DATABASES = {
         'default': {
             'ENGINE': 'mysql.connector.django',
-            'NAME': 'mysql',
+            'NAME': 'vgsdb',
             'USER': 'root',
             'PASSWORD': 'password',
             'HOST': 'localhost',
