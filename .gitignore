@@ -48,3 +48,8 @@ coverage.xml
 !.vscode/launch.json
 !.vscode/extensions.json
 .history
+
+# Excel temp/lock files #
+~$*.xlsx
+~$*.xls
+~$*.xlsm
