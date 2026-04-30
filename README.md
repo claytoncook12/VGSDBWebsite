@@ -27,3 +27,13 @@ pip install -r DjangoApp\requirements.txt
 # Run Django Developemnt Server
 python DjangoApp/manage.py runserver
 ```
+
+## Import Data into Database
+```
+python manage.py loaddata "datadump\2022-09-02 20-31sessiondb.json"
+```
+
+## Export Data from Database
+```
+python manage.py dumpdata session --indent 4 > "2026-04-30 13-40sessiondb.json"
+```
